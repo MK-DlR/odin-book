@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                 Int     @id @default(autoincrement())
+  username           String  @db.VarChar(32)
+  usernameNormalized String  @unique @db.VarChar(32)
+  email              String  @unique
+  password           String
+  displayName        String? @db.VarChar(64)
+  icon               String  @default("default-icon.png")
+  banner             String  @default("default-banner.png")
+  bio                String? @db.VarChar(200)
+  // authoredPosts   relation to Posts where user is the author
+  // reposts         relation to Reposts join table entries
+  // likes           relation to Likes join table entries
+  // followers       from Follows table
+  // following       from Follows table
+
+  @@map("users")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  // author
+  // parentId if null: regular post / if exists: reply to that post
+  createdAt DateTime @default(now())
+  content   String   @db.VarChar(2000)
+  // media relation to Media
+  // replies  relation to other Posts where parentId = this post's id
+  // reposts relation to Reposts join table entries
+  // likes relation to Likes join table entries
+  // replyCount
+  // repostCount
+  // likeCount
+
+  @@map("posts")
+}
+
+model Media {
+  id      Int     @id @default(autoincrement())
+  // postId
+  // type image or gif
+  // url
+  altText String?
+}
