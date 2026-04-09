@@ -5,7 +5,7 @@
 // imports
 const express = require("express");
 const path = require("path");
-// const { prisma } = require("./lib/prisma");
+const { prisma } = require("./lib/prisma");
 const cors = require("cors");
 
 // initialize app
@@ -29,8 +29,8 @@ app.get("/", (req, res) => {
 
 // router setup
 /*
-const crouterNameRouter = require("./routes/routerName.js");
-app.use("/routerName", crouterNameRouter);
+const routerNameRouter = require("./routes/routerName.js");
+app.use("/routerName", routerNameRouter);
 */
 
 // 404 handler
@@ -51,21 +51,17 @@ app.listen(PORT, async (error) => {
   console.log(`Server running on port ${PORT}.`);
 
   // test database connection
-  /*
   try {
     await prisma.$connect();
     console.log("Database connected");
   } catch (err) {
     console.error("Database connection failed:", err);
   }
-    */
 });
 
 // graceful shutdown
-/*
 process.on("SIGINT", async () => {
   await prisma.$disconnect();
   console.log("Database disconnected.");
   process.exit(0);
 });
-*/

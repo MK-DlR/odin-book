@@ -8,45 +8,91 @@ datasource db {
 }
 
 model User {
-  id                 Int     @id @default(autoincrement())
-  username           String  @db.VarChar(32)
-  usernameNormalized String  @unique @db.VarChar(32)
-  email              String  @unique
+  id                 Int      @id @default(autoincrement())
+  username           String   @db.VarChar(32)
+  usernameNormalized String   @unique @db.VarChar(32)
+  email              String   @unique
   password           String
-  displayName        String? @db.VarChar(64)
-  icon               String  @default("default-icon.png")
-  banner             String  @default("default-banner.png")
-  bio                String? @db.VarChar(200)
-  // authoredPosts   relation to Posts where user is the author
-  // reposts         relation to Reposts join table entries
-  // likes           relation to Likes join table entries
-  // followers       from Follows table
-  // following       from Follows table
+  displayName        String?  @db.VarChar(64)
+  icon               String   @default("default-icon.png")
+  banner             String   @default("default-banner.png")
+  bio                String?  @db.VarChar(200)
+  authoredPosts      Post[]   @relation("UserPosts")
+  reposts            Repost[]
+  likes              Like[]
+  followers          Follow[] @relation("UserFollowing")
+  following          Follow[] @relation("UserFollowers")
 
   @@map("users")
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  // author
-  // parentId if null: regular post / if exists: reply to that post
-  createdAt DateTime @default(now())
-  content   String   @db.VarChar(2000)
-  // media relation to Media
-  // replies  relation to other Posts where parentId = this post's id
-  // reposts relation to Reposts join table entries
-  // likes relation to Likes join table entries
-  // replyCount
-  // repostCount
-  // likeCount
+  id          Int      @id @default(autoincrement())
+  authorId    Int
+  author      User     @relation("UserPosts", fields: [authorId], references: [id])
+  parentId    Int?
+  parent      Post?    @relation("PostReplies", fields: [parentId], references: [id])
+  replies     Post[]   @relation("PostReplies")
+  createdAt   DateTime @default(now())
+  content     String   @db.VarChar(2000)
+  media       Media[]
+  repost      Repost[]
+  like        Like[]
+  replyCount  Int      @default(0)
+  repostCount Int      @default(0)
+  likeCount   Int      @default(0)
 
   @@map("posts")
 }
 
 model Media {
-  id      Int     @id @default(autoincrement())
-  // postId
-  // type image or gif
-  // url
+  id      Int       @id @default(autoincrement())
+  postId  Int
+  post    Post      @relation(fields: [postId], references: [id])
+  type    MediaType
+  url     String
   altText String?
+
+  @@map("media")
+}
+
+enum MediaType {
+  IMAGE
+  GIF
+}
+
+model Repost {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@map("reposts")
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@map("likes")
+}
+
+model Follow {
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  follower    User     @relation("UserFollowers", fields: [followerId], references: [id])
+  followingId Int
+  following   User     @relation("UserFollowing", fields: [followingId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+  @@map("follows")
 }
