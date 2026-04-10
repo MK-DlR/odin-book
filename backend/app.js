@@ -1,6 +1,6 @@
 // backend/app.js
 
-// require("dotenv").config();
+require("dotenv").config();
 
 // imports
 const express = require("express");
@@ -27,11 +27,18 @@ app.get("/", (req, res) => {
   res.json({ message: "API running" });
 });
 
-// router setup
 /*
-const routerNameRouter = require("./routes/routerName.js");
-app.use("/routerName", routerNameRouter);
+const followsRouter = require("./routes/follows.js");
+app.use("/follows", followsRouter);
 */
+
+/*
+const postsRouter = require("./routes/posts.js");
+app.use("/posts", postsRouter);
+*/
+
+const usersRouter = require("./routes/users.js");
+app.use("/users", usersRouter);
 
 // 404 handler
 app.use((req, res) => {
