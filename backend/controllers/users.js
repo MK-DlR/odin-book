@@ -11,17 +11,6 @@ const e = require("express");
 const isGuestUser = (user) => user.usernameNormalized === "guest";
 
 // TO DO:
-// viewing any profile
-// should display
-// profile information (icon, banner, display name, username, bio)
-// [#] followers, [#] following, [#] posts
-// [#] posts only counts authoredPosts
-// posts tab: authoredPosts (posts + replies) + reposts
-// replies tab: replies
-// media tab: all (original) media
-// likes tab: all likes
-
-// TO DO:
 // registration and login
 // should be able to use
 // passport.js
@@ -219,12 +208,17 @@ const profileGetMe = async (req, res, next) => {
         id: id,
       },
       select: {
+        id: true,
         username: true,
         displayName: true,
-        id: true,
         icon: true,
         banner: true,
         bio: true,
+        authoredPosts: true,
+        reposts: true,
+        likes: true,
+        followers: true,
+        following: true,
       },
     });
     if (userData) {
@@ -269,12 +263,17 @@ const profileGet = async (req, res, next) => {
         usernameNormalized: username.toLowerCase(),
       },
       select: {
+        id: true,
         username: true,
         displayName: true,
-        id: true,
         icon: true,
         banner: true,
         bio: true,
+        authoredPosts: true,
+        reposts: true,
+        likes: true,
+        followers: true,
+        following: true,
       },
     });
     if (result) {
@@ -306,12 +305,12 @@ const profilePut = async (req, res, next) => {
     }
 
     // extract fields to update
-    const { displayName, icon, bio } = req.body;
+    const { displayName, icon, banner, bio } = req.body;
 
     // update fields
     const user = await prisma.user.update({
       where: { id: req.user.id },
-      data: { displayName, icon, bio },
+      data: { displayName, icon, banner, bio },
       select: {
         username: true,
         displayName: true,
