@@ -13,7 +13,22 @@ const isGuestUser = (user) => user.usernameNormalized === "guest";
 // TO DO:
 // viewing any profile
 // should display
-// authoredPosts, reposts, likes, followers, following
+// profile information (icon, banner, display name, username, bio)
+// [#] followers, [#] following, [#] posts
+// [#] posts only counts authoredPosts
+// posts tab: authoredPosts (posts + replies) + reposts
+// replies tab: replies
+// media tab: all (original) media
+// likes tab: all likes
+
+// TO DO:
+// registration and login
+// should be able to use
+// passport.js
+// to register/login using bsky
+// passport-github2
+// to register/login using github
+// currently: manual registration and login are set up
 
 // registration - inserts new user into schema
 const registerPost = async (req, res, next) => {
