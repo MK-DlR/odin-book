@@ -13,7 +13,7 @@ const isGuestUser = (user) => user.usernameNormalized === "guest";
 // TO DO:
 // registration and login
 // should be able to use
-// passport.js
+// passport-oauth2
 // to register/login using bsky
 // passport-github2
 // to register/login using github
@@ -32,7 +32,7 @@ const registerPost = async (req, res, next) => {
   let errors = [];
 
   try {
-    const { username, password, confirmPassword } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
 
     // check if username meets requirements
     function validateUsername(username) {
@@ -72,6 +72,29 @@ const registerPost = async (req, res, next) => {
       errors.push("Username already taken.");
     }
 
+    // check if email already exists
+    const existingEmail = await prisma.user.findUnique({
+      where: { email: email },
+    });
+
+    if (existingEmail) {
+      errors.push("Email already in use.");
+    }
+
+    // check if email meets requirements
+    function validateEmail(email) {
+      const errors = [];
+
+      // check email format
+      let emailRegex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
+      if (!emailRegex.test(email)) errors.push("Please enter a valid email.");
+
+      return errors;
+    }
+
+    const emailErrors = validateEmail(email);
+    errors = errors.concat(emailErrors);
+
     // check if password meets requirements
     function validatePassword(password) {
       const errors = [];
@@ -109,19 +132,9 @@ const registerPost = async (req, res, next) => {
       data: {
         username,
         usernameNormalized: lowercaseUser,
+        email,
         password: hashedPassword,
       },
-    });
-
-    // find default channel
-    const defaultChannel = await prisma.channel.findFirst({
-      where: { isDefault: true },
-    });
-
-    // connect new user to default channel
-    await prisma.channel.update({
-      where: { id: defaultChannel.id },
-      data: { users: { connect: { id: newUser.id } } },
     });
 
     res.status(201).json({ message: "User registered successfully." });
