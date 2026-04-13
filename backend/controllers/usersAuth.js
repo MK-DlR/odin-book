@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const { prisma } = require("../lib/prisma.js");
 const e = require("express");
 
-// TO DO:
+// TODO:
 // registration and login
 // should be able to use
 // passport-oauth2

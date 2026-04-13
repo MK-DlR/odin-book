@@ -1,16 +1,16 @@
-// backend/controllers/follows.js
+// backend/controllers/usersFollows.js
 
 // imports
 const { prisma } = require("../lib/prisma.js");
 
-// TO DO:
+// TODO:
 // follow user
 // toggles anywhere "+ follow" button appears
 // to display "following"
 // adds user to logged in user's following list
 // adds user's posts to dashboard
 
-// TO DO:
+// TODO:
 // unfollow user
 // toggles anywhere "following" button appears
 // to display "+ follow"

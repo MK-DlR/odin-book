@@ -2,7 +2,6 @@
 
 // imports
 const { prisma } = require("../lib/prisma.js");
-const e = require("express");
 
 // check if user is guest
 const isGuestUser = (user) => user.usernameNormalized === "guest";

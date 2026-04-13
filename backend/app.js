@@ -22,15 +22,9 @@ app.use(
 );
 
 // routes
-// home route (before routers)
 app.get("/", (req, res) => {
   res.json({ message: "API running" });
 });
-
-/*
-const followsRouter = require("./routes/follows.js");
-app.use("/follows", followsRouter);
-*/
 
 /*
 const postsRouter = require("./routes/posts.js");
