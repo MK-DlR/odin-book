@@ -68,7 +68,7 @@ const usersGet = async (req, res, next) => {
   }
 };
 
-// viewing profiles
+// view profile
 const profileGet = async (req, res, next) => {
   try {
     // extract username
@@ -105,7 +105,7 @@ const profileGet = async (req, res, next) => {
   }
 };
 
-// editing own profile
+// edit own profile if not guest
 const profilePut = async (req, res, next) => {
   try {
     // fetch user to check if guest

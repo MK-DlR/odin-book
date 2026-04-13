@@ -6,7 +6,7 @@ const router = express.Router();
 
 const usersAuthController = require("../controllers/usersAuth.js");
 const usersProfilesController = require("../controllers/usersProfiles.js");
-const usersFollowsController = require("../controllers/usersFollows.js");
+const usersFollowsController = require("../controllers/usersFollow.js");
 
 const { authJWT } = require("../middleware/auth.js");
 
@@ -23,7 +23,11 @@ router.put("/:username", authJWT, usersProfilesController.profilePut);
 
 // follow routes
 // TODO: implement follow/unfollow functionality
-// router.post("/:username/follow", authJWT, usersFollowsController.FUNCTION_NAME);
-// router.delete("/:username/follow", authJWT, usersFollowsController.FUNCTION_NAME);
+router.post("/:username/follow", authJWT, usersFollowsController.followPost);
+router.delete(
+  "/:username/follow",
+  authJWT,
+  usersFollowsController.followDelete,
+);
 
 module.exports = router;

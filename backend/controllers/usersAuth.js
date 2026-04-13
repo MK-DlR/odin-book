@@ -16,7 +16,7 @@ const e = require("express");
 // to register/login using github
 // currently: manual registration and login are set up
 
-// registration - inserts new user into schema
+// registration
 const registerPost = async (req, res, next) => {
   const validationErrors = validationResult(req);
 
@@ -140,7 +140,7 @@ const registerPost = async (req, res, next) => {
   }
 };
 
-// login
+// login as user
 const loginPost = async (req, res, next) => {
   try {
     // extract username and password
@@ -179,7 +179,7 @@ const loginPost = async (req, res, next) => {
   }
 };
 
-// guest account login
+// login as guest
 const guestLoginPost = async (req, res, next) => {
   try {
     // search for user by username
