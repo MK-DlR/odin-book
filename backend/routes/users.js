@@ -2,28 +2,29 @@
 
 const express = require("express");
 const router = express.Router();
-const usersController = require("../controllers/users.js");
+const usersAuthController = require("../controllers/usersAuth.js");
+const usersProfilesController = require("../controllers/usersProfiles.js");
 const { authJWT } = require("../middleware/auth.js");
 
 // registration
-router.post("/register", usersController.registerPost);
+router.post("/register", usersAuthController.registerPost);
 
 // login
-router.post("/login", usersController.loginPost);
+router.post("/login", usersAuthController.loginPost);
 
 // guest login
-router.post("/guest-login", usersController.guestLoginPost);
+router.post("/guest-login", usersAuthController.guestLoginPost);
 
 // fetch and return current user's data
-router.get("/me", authJWT, usersController.profileGetMe);
+router.get("/me", authJWT, usersProfilesController.profileGetMe);
 
 // get all users
-router.get("/all-users", usersController.usersGet);
+router.get("/all-users", usersProfilesController.usersGet);
 
 // view profiles
-router.get("/:username", usersController.profileGet);
+router.get("/:username", usersProfilesController.profileGet);
 
 // edit own profile
-router.put("/:username", authJWT, usersController.profilePut);
+router.put("/:username", authJWT, usersProfilesController.profilePut);
 
 module.exports = router;
