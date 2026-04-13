@@ -255,6 +255,13 @@ const usersGet = async (req, res, next) => {
         username: true,
         displayName: true,
         icon: true,
+        banner: true,
+        bio: true,
+        authoredPosts: true,
+        reposts: true,
+        likes: true,
+        followers: true,
+        following: true,
       },
       orderBy: { username: "asc" },
     });
