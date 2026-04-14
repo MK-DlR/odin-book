@@ -3,31 +3,52 @@
 // imports
 const { prisma } = require("../lib/prisma.js");
 
-// TODO: add follow functionality
-const followPost = async (req, res, next) => {
-  console.log("TODO: add followUser functionality");
-  // adds user to logged in user's following list
-  // TO DO: prisma query to add posts to dashboard
-  function queryPosts() {
-    console.log("TODO: add posts to dashboard");
-    // add posts to dashboard
+// fetch user's posts
+function addPostsQuery() {
+  console.log("TODO: add posts to dashboard");
+  // TO DO: prisma query to fetch user's posts
+}
+
+const followUser = async (req, res, next) => {
+  try {
+    const user = req.user.id;
+
+    if (!user) {
+      // if not logged in, return 403
+      return res.status(403).json({ message: "User not logged in." });
+    } else {
+      // TO DO:
+      // if logged in
+      // query for user
+      // add to following list
+      // if user tries to follow self
+      // do not allow
+
+      // add followed user's posts to dashboard
+      addPostsQuery();
+    }
+  } catch (err) {
+    return next(err);
   }
-  queryPosts();
 };
 
-// TODO: add unfollow functionality
-const followDelete = async (req, res, next) => {
-  console.log("TODO: add unfollowUser functionality");
-  // removes user from logged in user's following list
+// remove posts from dashboard
+function removePostsQuery() {
+  console.log("TODO: remove posts from dashboard");
   // TO DO: prisma query to remove posts from dashboard
-  function queryPosts() {
-    console.log("TODO: remove posts from dashboard");
-    // add posts to dashboard
-  }
-  queryPosts();
+  // this might be unnecessary
+}
+
+const unfollowUser = async (req, res, next) => {
+  console.log("TODO: add unfollowUser functionality");
+  // TO DO:
+  // if user is logged in
+  // query for user
+  // remove from following list
+  removePostsQuery();
 };
 
 module.exports = {
-  followPost,
-  followDelete,
+  followUser,
+  unfollowUser,
 };

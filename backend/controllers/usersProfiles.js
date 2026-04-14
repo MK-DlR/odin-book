@@ -7,7 +7,7 @@ const { prisma } = require("../lib/prisma.js");
 const isGuestUser = (user) => user.usernameNormalized === "guest";
 
 // fetch and return current user's data
-const profileGetMe = async (req, res, next) => {
+const getSelf = async (req, res, next) => {
   try {
     // extract user's id
     const id = req.user.id;
@@ -44,7 +44,7 @@ const profileGetMe = async (req, res, next) => {
 };
 
 // get all users
-const usersGet = async (req, res, next) => {
+const getAllUsers = async (req, res, next) => {
   try {
     const allUsers = await prisma.user.findMany({
       select: {
@@ -69,7 +69,7 @@ const usersGet = async (req, res, next) => {
 };
 
 // view profile
-const profileGet = async (req, res, next) => {
+const getProfile = async (req, res, next) => {
   try {
     // extract username
     const { username } = req.params;
@@ -106,7 +106,7 @@ const profileGet = async (req, res, next) => {
 };
 
 // edit own profile if not guest
-const profilePut = async (req, res, next) => {
+const editProfile = async (req, res, next) => {
   try {
     // fetch user to check if guest
     const currentUser = await prisma.user.findUnique({
@@ -145,8 +145,8 @@ const profilePut = async (req, res, next) => {
 };
 
 module.exports = {
-  profileGetMe,
-  usersGet,
-  profileGet,
-  profilePut,
+  getSelf,
+  getAllUsers,
+  getProfile,
+  editProfile,
 };

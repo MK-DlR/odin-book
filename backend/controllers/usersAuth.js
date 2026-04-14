@@ -17,7 +17,7 @@ const e = require("express");
 // currently: manual registration and login are set up
 
 // registration
-const registerPost = async (req, res, next) => {
+const registerUser = async (req, res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
@@ -141,7 +141,7 @@ const registerPost = async (req, res, next) => {
 };
 
 // login as user
-const loginPost = async (req, res, next) => {
+const loginUser = async (req, res, next) => {
   try {
     // extract username and password
     const { username, password } = req.body;
@@ -180,7 +180,7 @@ const loginPost = async (req, res, next) => {
 };
 
 // login as guest
-const guestLoginPost = async (req, res, next) => {
+const loginGuest = async (req, res, next) => {
   try {
     // search for user by username
     const result = await prisma.user.findUnique({
@@ -207,7 +207,7 @@ const guestLoginPost = async (req, res, next) => {
 };
 
 module.exports = {
-  registerPost,
-  loginPost,
-  guestLoginPost,
+  registerUser,
+  loginUser,
+  loginGuest,
 };
