@@ -11,18 +11,36 @@ function addPostsQuery() {
 
 const followUser = async (req, res, next) => {
   try {
-    const user = req.user.id;
+    const followerId = req.user.id;
+    const followingId = req.params.id;
 
     if (!user) {
       // if not logged in, return 403
       return res.status(403).json({ message: "User not logged in." });
     } else {
-      // TO DO:
-      // if logged in
-      // query for user
-      // add to following list
-      // if user tries to follow self
-      // do not allow
+      if (followerId === followingId) {
+        return res.status(400).json({ error: "You can't follow yourself" });
+      }
+
+      const existing = await prisma.follow.findUnique({
+        where: {
+          followerId_followingId: {
+            followerId,
+            followingId,
+          },
+        },
+      });
+
+      // if already following, unfollow
+      if (existing) {
+        unfollowUser();
+      }
+
+      await prisma.follow.create({
+        data: { followerId, followingId },
+      });
+
+      res.status(201).json({ message: "Followed user" });
 
       // add followed user's posts to dashboard
       addPostsQuery();

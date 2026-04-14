@@ -4,9 +4,9 @@
 const express = require("express");
 const router = express.Router();
 
-const usersAuthController = require("../controllers/usersAuth.js");
-const usersProfilesController = require("../controllers/usersProfiles.js");
-const usersFollowsController = require("../controllers/usersFollow.js");
+const usersAuthController = require("../controllers/users/usersAuth.js");
+const usersProfilesController = require("../controllers/users/usersProfiles.js");
+const usersFollowsController = require("../controllers/users/usersFollow.js");
 
 const { authJWT } = require("../middleware/auth.js");
 
