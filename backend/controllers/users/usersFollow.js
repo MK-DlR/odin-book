@@ -1,7 +1,7 @@
 // backend/controllers/usersFollow.js
 
 // imports
-const { prisma } = require("../lib/prisma.js");
+const { prisma } = require("../../lib/prisma.js");
 
 // fetch user's posts
 function addPostsQuery() {

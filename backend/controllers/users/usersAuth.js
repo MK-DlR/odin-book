@@ -4,7 +4,7 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { prisma } = require("../lib/prisma.js");
+const { prisma } = require("../../lib/prisma.js");
 const e = require("express");
 
 // TODO:

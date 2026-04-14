@@ -1,7 +1,7 @@
 // backend/controllers/usersProfiles.js
 
 // imports
-const { prisma } = require("../lib/prisma.js");
+const { prisma } = require("../../lib/prisma.js");
 
 // check if user is guest
 const isGuestUser = (user) => user.usernameNormalized === "guest";
