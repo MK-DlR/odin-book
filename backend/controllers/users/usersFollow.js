@@ -3,18 +3,12 @@
 // imports
 const { prisma } = require("../../lib/prisma.js");
 
-// fetch user's posts
-function addPostsQuery() {
-  console.log("TODO: add posts to dashboard");
-  // TO DO: prisma query to fetch user's posts
-}
-
 const manageFollow = async (req, res, next) => {
   try {
     const followerId = req.user.id;
     const username = req.params.username;
 
-    // Look up the user by username to get their ID
+    // look up user by username to get ID
     const userToFollow = await prisma.user.findUnique({
       where: { usernameNormalized: username.toLowerCase() },
     });
@@ -60,21 +54,11 @@ const manageFollow = async (req, res, next) => {
       });
 
       res.status(201).json({ message: "Followed user", isFollowing: true });
-
-      // add followed user's posts to dashboard
-      addPostsQuery();
     }
   } catch (err) {
     return next(err);
   }
 };
-
-// remove posts from dashboard
-function removePostsQuery() {
-  console.log("TODO: remove posts from dashboard");
-  // TO DO: prisma query to remove posts from dashboard
-  // this might be unnecessary
-}
 
 module.exports = {
   manageFollow,
