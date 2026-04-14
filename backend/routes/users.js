@@ -22,12 +22,6 @@ router.get("/:username", usersProfilesController.getProfile);
 router.put("/:username", authJWT, usersProfilesController.editProfile);
 
 // follow routes
-// TODO: implement follow/unfollow functionality
-router.post("/:username/follow", authJWT, usersFollowsController.followUser);
-router.delete(
-  "/:username/follow",
-  authJWT,
-  usersFollowsController.unfollowUser,
-);
+router.post("/:username/follow", authJWT, usersFollowsController.manageFollow);
 
 module.exports = router;
