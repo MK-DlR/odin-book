@@ -9,13 +9,13 @@ const postsController = require("../controllers/posts.js");
 const { authJWT } = require("../middleware/auth.js");
 
 // post routes
-// router.post("/new-post", authJWT, postsController.createPost);
-// router.delete("/delete/:id", authJWT, postsController.deletePost);
+router.post("/new-post", authJWT, postsController.createPost);
+router.delete("/delete/:id", authJWT, postsController.deletePost);
 
 // repost routes
-// router.post("/repost/:id", authJWT, postsController.manageRepost);
+router.post("/repost/:id", authJWT, postsController.manageRepost);
 
 // like routes
-// router.post("/like/:id", authJWT, postsController.manageLike);
+router.post("/like/:id", authJWT, postsController.manageLike);
 
 module.exports = router;

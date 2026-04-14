@@ -26,10 +26,8 @@ app.get("/", (req, res) => {
   res.json({ message: "API running" });
 });
 
-/*
 const postsRouter = require("./routes/posts.js");
 app.use("/posts", postsRouter);
-*/
 
 const usersRouter = require("./routes/users.js");
 app.use("/users", usersRouter);
