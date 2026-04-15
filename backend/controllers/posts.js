@@ -78,6 +78,7 @@ const deletePost = async (req, res, next) => {
     if (!parentId) {
       // delete normal post
       // TODO: make sure reposts/likes are deleted
+      // work on this once reposts/likes functionality is added
       // DONE: replies are correctly orphaned
       await prisma.post.delete({
         where: { id: postId },
@@ -122,11 +123,59 @@ const manageRepost = async (req, res, next) => {
 };
 
 // likes
-// TODO: manageLike
 const manageLike = async (req, res, next) => {
   try {
-    console.log("manageLike in progress");
-    // should increment/decrement original post's likeCount
+    const postId = Number(req.params.id);
+    const userId = req.user.id;
+
+    const existing = await prisma.like.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
+    });
+
+    // if already liked, unlike
+    if (existing) {
+      await prisma.$transaction([
+        prisma.like.delete({
+          where: {
+            userId_postId: {
+              userId,
+              postId,
+            },
+          },
+        }),
+
+        // decrement likeCount
+        prisma.post.update({
+          where: { id: postId },
+          data: { likeCount: { decrement: 1 } },
+        }),
+      ]);
+
+      res.status(201).json({ message: "Unliked post", isLiked: false });
+    } else {
+      // if not liked, add like
+      await prisma.$transaction([
+        prisma.like.create({
+          data: {
+            userId,
+            postId,
+          },
+        }),
+
+        // increment likeCount
+        prisma.post.update({
+          where: { id: postId },
+          data: { likeCount: { increment: 1 } },
+        }),
+      ]);
+
+      res.status(201).json({ message: "Liked post", isLiked: true });
+    }
   } catch (err) {
     return next(err);
   }

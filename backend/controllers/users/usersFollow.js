@@ -38,7 +38,7 @@ const manageFollow = async (req, res, next) => {
 
     // if already following, unfollow
     if (existing) {
-      const deleteFollow = await prisma.follow.delete({
+      await prisma.follow.delete({
         where: {
           followerId_followingId: {
             followerId,
@@ -49,6 +49,7 @@ const manageFollow = async (req, res, next) => {
 
       res.status(201).json({ message: "Unfollowed user", isFollowing: false });
     } else {
+      // if not followed, add follow
       await prisma.follow.create({
         data: { followerId, followingId },
       });
