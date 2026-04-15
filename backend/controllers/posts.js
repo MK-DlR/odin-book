@@ -9,8 +9,10 @@ const createPost = async (req, res, next) => {
     const { content, parentId } = req.body;
     const author = req.user.id;
 
-    // TODO: empty posts
-    // don't let empty posts be created
+    // guard against empty posts
+    if (!content) {
+      return res.status(400).json({ error: "Post must have content." });
+    }
 
     if (!parentId) {
       // create normal post
