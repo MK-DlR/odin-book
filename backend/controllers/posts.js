@@ -33,19 +33,27 @@ const createPost = async (req, res, next) => {
       res.status(200).json({ posts: newPost });
     } else {
       // create reply post
-      const replyPost = await prisma.post.create({
-        data: { authorId: author, content: content, parentId: parentId },
-        include: {
-          author: {
-            select: {
-              id: true,
-              username: true,
-              displayName: true,
-              icon: true,
+      // TODO: should increment parentId post's replyCount
+      const [replyPost] = await prisma.$transaction([
+        prisma.post.create({
+          data: { authorId: author, content: content, parentId: parentId },
+          include: {
+            author: {
+              select: {
+                id: true,
+                username: true,
+                displayName: true,
+                icon: true,
+              },
             },
           },
-        },
-      });
+        }),
+
+        prisma.post.update({
+          where: { id: parentId },
+          data: { replyCount: { increment: 1 } },
+        }),
+      ]);
 
       res.status(200).json({ posts: replyPost });
     }
@@ -59,9 +67,9 @@ const deletePost = async (req, res, next) => {
   try {
     console.log("deletePost in progress");
     // delete post from database
-    // removes post from list of user's posts
     // deletes any reposts/likes
     // orphans any replies
+    // if reply: decrements parentId post's replyCount
   } catch (err) {
     return next(err);
   }
@@ -74,7 +82,9 @@ const manageRepost = async (req, res, next) => {
     console.log("manageRepost in progress");
     // adds repost to list of user's posts
     // removes repost from list of user's posts
-    // figure out how to handle quote reposts
+    // should increment/decrement original post's repostCount
+
+    // TODO: figure out how to handle quote reposts
     // might need to update schema
   } catch (err) {
     return next(err);
@@ -86,8 +96,7 @@ const manageRepost = async (req, res, next) => {
 const manageLike = async (req, res, next) => {
   try {
     console.log("manageLike in progress");
-    // adds post to user's likes list
-    // removes post from user's likes list
+    // should increment/decrement original post's likeCount
   } catch (err) {
     return next(err);
   }
