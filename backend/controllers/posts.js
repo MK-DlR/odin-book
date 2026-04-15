@@ -33,7 +33,6 @@ const createPost = async (req, res, next) => {
       res.status(200).json({ posts: newPost });
     } else {
       // create reply post
-      // TODO: should increment parentId post's replyCount
       const [replyPost] = await prisma.$transaction([
         prisma.post.create({
           data: { authorId: author, content: content, parentId: parentId },
@@ -49,6 +48,7 @@ const createPost = async (req, res, next) => {
           },
         }),
 
+        // increment replyCount
         prisma.post.update({
           where: { id: parentId },
           data: { replyCount: { increment: 1 } },
@@ -62,14 +62,44 @@ const createPost = async (req, res, next) => {
   }
 };
 
-// TODO: deletePost
+// WIP: deletePost
 const deletePost = async (req, res, next) => {
   try {
-    console.log("deletePost in progress");
-    // delete post from database
-    // deletes any reposts/likes
-    // orphans any replies
-    // if reply: decrements parentId post's replyCount
+    const postId = Number(req.params.id);
+
+    // find post parentId if applicable
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+      select: { parentId: true },
+    });
+
+    const parentId = post?.parentId;
+
+    if (!parentId) {
+      // delete normal post
+      // TODO: make sure reposts/likes are deleted
+      // DONE: replies are correctly orphaned
+      await prisma.post.delete({
+        where: { id: postId },
+      });
+
+      res.status(200).json({ message: "Post successfully deleted." });
+    } else {
+      // delete reply post
+      await prisma.$transaction([
+        prisma.post.delete({
+          where: { id: postId },
+        }),
+
+        // decrement replyCount
+        prisma.post.update({
+          where: { id: parentId },
+          data: { replyCount: { decrement: 1 } },
+        }),
+      ]);
+
+      res.status(200).json({ message: "Post successfully deleted." });
+    }
   } catch (err) {
     return next(err);
   }
