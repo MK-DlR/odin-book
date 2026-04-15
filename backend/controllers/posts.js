@@ -6,31 +6,47 @@ const { prisma } = require("../lib/prisma.js");
 // posts/replies
 const createPost = async (req, res, next) => {
   try {
-    const { content } = req.body;
+    const { content, parentId } = req.body;
     const author = req.user.id;
-
-    // create post
-    const newPost = await prisma.post.create({
-      data: { authorId: author, content: content },
-      include: {
-        author: {
-          select: {
-            id: true,
-            username: true,
-            displayName: true,
-            icon: true,
-          },
-        },
-      },
-    });
-    res.status(200).json({ posts: newPost });
-
-    // TODO: reply posts
-    // can see list of who replied to the post
-    // and the reply itself
 
     // TODO: empty posts
     // don't let empty posts be created
+
+    if (!parentId) {
+      // create normal post
+      const newPost = await prisma.post.create({
+        data: { authorId: author, content: content },
+        include: {
+          author: {
+            select: {
+              id: true,
+              username: true,
+              displayName: true,
+              icon: true,
+            },
+          },
+        },
+      });
+
+      res.status(200).json({ posts: newPost });
+    } else {
+      // create reply post
+      const replyPost = await prisma.post.create({
+        data: { authorId: author, content: content, parentId: parentId },
+        include: {
+          author: {
+            select: {
+              id: true,
+              username: true,
+              displayName: true,
+              icon: true,
+            },
+          },
+        },
+      });
+
+      res.status(200).json({ posts: replyPost });
+    }
   } catch (err) {
     return next(err);
   }
