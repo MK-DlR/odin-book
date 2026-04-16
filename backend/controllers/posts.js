@@ -80,7 +80,7 @@ const createPost = async (req, res, next) => {
   }
 };
 
-// WIP: deletePost
+// deletePost
 const deletePost = async (req, res, next) => {
   try {
     const postId = Number(req.params.id);
@@ -95,8 +95,6 @@ const deletePost = async (req, res, next) => {
 
     if (!parentId) {
       // delete normal post
-      // TODO: make sure reposts are deleted
-      // should be functional, but need repost functionality to test
       await prisma.post.delete({
         where: { id: postId },
       });
