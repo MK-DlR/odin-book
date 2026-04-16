@@ -2,11 +2,13 @@
 
 // imports
 const { prisma } = require("../lib/prisma.js");
+
 const {
   createNormalPost,
   createQuotePost,
   createReplyPost,
-} = require("../helpers/createPosts.js");
+} = require("../helpers/createPostHelpers.js");
+const { deletePostHelper } = require("../helpers/deletePostHelper.js");
 
 // create post/quote/reply
 const createPost = async (req, res, next) => {
@@ -40,6 +42,7 @@ const createPost = async (req, res, next) => {
       return res.status(404).json({ error: "Quoted post not found." });
     }
 
+    // guard against posts being a reply and a quote
     if (parentId && quotedId) {
       return res
         .status(400)

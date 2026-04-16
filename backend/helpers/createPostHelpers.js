@@ -1,4 +1,4 @@
-// backend/helpers/createPosts.js
+// backend/helpers/createPostHelpers.js
 
 // imports
 const { prisma } = require("../lib/prisma.js");
