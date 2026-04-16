@@ -33,6 +33,9 @@ model Post {
   parentId    Int?
   parent      Post?    @relation("PostReplies", fields: [parentId], references: [id])
   replies     Post[]   @relation("PostReplies")
+  quotedId    Int?
+  quoted      Post?    @relation("PostQuotes", fields: [quotedId], references: [id])
+  quotes      Post[]   @relation("PostQuotes")
   createdAt   DateTime @default(now())
   content     String   @db.VarChar(2000)
   media       Media[]

@@ -177,7 +177,7 @@ const manageRepost = async (req, res, next) => {
       res.status(201).json({ message: "Repost created", isReposted: true });
     }
 
-    // TODO: figure out how to handle quote reposts
+    // TODO: figure out how to handle quote reposts (QRP)
     // might need to update schema
   } catch (err) {
     return next(err);
