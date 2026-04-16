@@ -124,13 +124,60 @@ const deletePost = async (req, res, next) => {
 };
 
 // reposts
-// TODO: manageRepost
+// WIP: manageRepost
 const manageRepost = async (req, res, next) => {
   try {
-    console.log("manageRepost in progress");
-    // adds repost to list of user's posts
-    // removes repost from list of user's posts
-    // should increment/decrement original post's repostCount
+    const postId = Number(req.params.id);
+    const userId = req.user.id;
+
+    const existing = await prisma.repost.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
+    });
+
+    // if already reposted, remove repost
+    if (existing) {
+      await prisma.$transaction([
+        prisma.repost.delete({
+          where: {
+            userId_postId: {
+              userId,
+              postId,
+            },
+          },
+        }),
+
+        // decrement repostCount
+        prisma.post.update({
+          where: { id: postId },
+          data: { repostCount: { decrement: 1 } },
+        }),
+      ]);
+
+      res.status(201).json({ message: "Repost removed", isReposted: false });
+    } else {
+      // if not reposted, create repost
+      await prisma.$transaction([
+        prisma.repost.create({
+          data: {
+            userId,
+            postId,
+          },
+        }),
+
+        // increment repostCount
+        prisma.post.update({
+          where: { id: postId },
+          data: { repostCount: { increment: 1 } },
+        }),
+      ]);
+
+      res.status(201).json({ message: "Repost created", isReposted: true });
+    }
 
     // TODO: figure out how to handle quote reposts
     // might need to update schema
