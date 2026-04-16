@@ -3,20 +3,20 @@
 // imports
 const { prisma } = require("../lib/prisma.js");
 
-// posts/replies
+// create post/reply/repost
+// TODO: handle quote reposts (a post attached to quotedId)
 const createPost = async (req, res, next) => {
   try {
-    const { content, parentId } = req.body;
+    const { content, parentId, quotedId } = req.body;
     const author = req.user.id;
 
     const isReply = !!parentId;
+    const isQuote = !!quotedId;
 
-    const newPostData = {
-      authorId: author,
-      content,
-      parentId: isReply ? parentId : null,
-      wasReply: isReply,
-    };
+    // guard against empty posts
+    if (!content) {
+      return res.status(400).json({ error: "Posts must have content." });
+    }
 
     // verify parentId exists
     const parentPost = parentId
@@ -27,13 +27,31 @@ const createPost = async (req, res, next) => {
       return res.status(404).json({ error: "Parent post not found." });
     }
 
-    // guard against empty posts
-    if (!content) {
-      return res.status(400).json({ error: "Posts must have content." });
+    // verify quotedId exists
+    const quotedPost = quotedId
+      ? await prisma.post.findUnique({ where: { id: quotedId } })
+      : null;
+
+    if (quotedId && !quotedPost) {
+      return res.status(404).json({ error: "Quoted post not found." });
     }
 
-    if (!isReply) {
-      // create normal post
+    if (parentId && quotedId) {
+      return res
+        .status(400)
+        .json({ error: "Post cannot be both a reply and a quote." });
+    }
+
+    // create post data
+    const newPostData = {
+      authorId: author,
+      content,
+      parentId: isReply ? parentId : null,
+      wasReply: isReply,
+    };
+
+    // create normal post
+    if (!isReply && !quotedId) {
       const newPost = await prisma.post.create({
         data: newPostData,
         include: {
@@ -48,9 +66,43 @@ const createPost = async (req, res, next) => {
         },
       });
 
-      res.status(200).json({ posts: newPost });
-    } else {
-      // create reply post
+      return res.status(200).json({ posts: newPost });
+    }
+
+    // create quote repost
+    if (!isReply) {
+      const [quotePost] = await prisma.$transaction([
+        prisma.post.create({
+          data: {
+            authorId: author,
+            content,
+            quotedId,
+            wasReply: false,
+          },
+          include: {
+            author: {
+              select: {
+                id: true,
+                username: true,
+                displayName: true,
+                icon: true,
+              },
+            },
+          },
+        }),
+
+        // increment repostCount
+        prisma.post.update({
+          where: { id: quotedId },
+          data: { repostCount: { increment: 1 } },
+        }),
+      ]);
+
+      return res.status(200).json({ posts: quotePost });
+    }
+
+    // create reply post
+    if (isReply) {
       const [replyPost] = await prisma.$transaction([
         prisma.post.create({
           data: newPostData,
@@ -73,48 +125,76 @@ const createPost = async (req, res, next) => {
         }),
       ]);
 
-      res.status(200).json({ posts: replyPost });
+      return res.status(200).json({ posts: replyPost });
     }
   } catch (err) {
     return next(err);
   }
 };
 
-// deletePost
+// delete post/reply/repost
 const deletePost = async (req, res, next) => {
   try {
     const postId = Number(req.params.id);
 
-    // find post parentId if applicable
+    // find post type info
     const post = await prisma.post.findUnique({
       where: { id: postId },
-      select: { parentId: true },
+      select: {
+        parentId: true,
+        quotedId: true,
+      },
     });
 
     const parentId = post?.parentId;
+    const quotedId = post?.quotedId;
 
-    if (!parentId) {
+    // classify post type
+    let type = "normal";
+    if (parentId) type = "reply";
+    if (quotedId) type = "quote";
+
+    switch (type) {
       // delete normal post
-      await prisma.post.delete({
-        where: { id: postId },
-      });
-
-      res.status(200).json({ message: "Post successfully deleted." });
-    } else {
-      // delete reply post
-      await prisma.$transaction([
-        prisma.post.delete({
+      case "normal": {
+        await prisma.post.delete({
           where: { id: postId },
-        }),
+        });
 
-        // decrement replyCount
-        prisma.post.update({
-          where: { id: parentId },
-          data: { replyCount: { decrement: 1 } },
-        }),
-      ]);
+        return res.status(200).json({ message: "Post successfully deleted." });
+      }
 
-      res.status(200).json({ message: "Post successfully deleted." });
+      // delete reply post
+      case "reply": {
+        await prisma.$transaction([
+          prisma.post.delete({
+            where: { id: postId },
+          }),
+
+          prisma.post.update({
+            where: { id: parentId },
+            data: { replyCount: { decrement: 1 } },
+          }),
+        ]);
+
+        return res.status(200).json({ message: "Post successfully deleted." });
+      }
+
+      // delete quote post
+      case "quote": {
+        await prisma.$transaction([
+          prisma.post.delete({
+            where: { id: postId },
+          }),
+
+          prisma.post.update({
+            where: { id: quotedId },
+            data: { repostCount: { decrement: 1 } },
+          }),
+        ]);
+
+        return res.status(200).json({ message: "Post successfully deleted." });
+      }
     }
   } catch (err) {
     return next(err);
@@ -122,7 +202,6 @@ const deletePost = async (req, res, next) => {
 };
 
 // reposts
-// WIP: manageRepost
 const manageRepost = async (req, res, next) => {
   try {
     const postId = Number(req.params.id);
@@ -156,7 +235,9 @@ const manageRepost = async (req, res, next) => {
         }),
       ]);
 
-      res.status(201).json({ message: "Repost removed", isReposted: false });
+      return res
+        .status(201)
+        .json({ message: "Repost removed", isReposted: false });
     } else {
       // if not reposted, create repost
       await prisma.$transaction([
@@ -174,11 +255,10 @@ const manageRepost = async (req, res, next) => {
         }),
       ]);
 
-      res.status(201).json({ message: "Repost created", isReposted: true });
+      return res
+        .status(201)
+        .json({ message: "Repost created", isReposted: true });
     }
-
-    // TODO: figure out how to handle quote reposts (QRP)
-    // might need to update schema
   } catch (err) {
     return next(err);
   }
@@ -218,7 +298,7 @@ const manageLike = async (req, res, next) => {
         }),
       ]);
 
-      res.status(201).json({ message: "Unliked post", isLiked: false });
+      return res.status(201).json({ message: "Unliked post", isLiked: false });
     } else {
       // if not liked, add like
       await prisma.$transaction([
@@ -236,7 +316,7 @@ const manageLike = async (req, res, next) => {
         }),
       ]);
 
-      res.status(201).json({ message: "Liked post", isLiked: true });
+      return res.status(201).json({ message: "Liked post", isLiked: true });
     }
   } catch (err) {
     return next(err);
