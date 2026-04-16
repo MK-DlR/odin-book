@@ -41,6 +41,7 @@ model Post {
   replyCount  Int      @default(0)
   repostCount Int      @default(0)
   likeCount   Int      @default(0)
+  wasReply    Boolean  @default(false)
 
   @@map("posts")
 }

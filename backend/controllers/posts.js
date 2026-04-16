@@ -9,15 +9,33 @@ const createPost = async (req, res, next) => {
     const { content, parentId } = req.body;
     const author = req.user.id;
 
+    const isReply = !!parentId;
+
+    const newPostData = {
+      authorId: author,
+      content,
+      parentId: isReply ? parentId : null,
+      wasReply: isReply,
+    };
+
+    // verify parentId exists
+    const parentPost = parentId
+      ? await prisma.post.findUnique({ where: { id: parentId } })
+      : null;
+
+    if (parentId && !parentPost) {
+      return res.status(404).json({ error: "Parent post not found." });
+    }
+
     // guard against empty posts
     if (!content) {
       return res.status(400).json({ error: "Posts must have content." });
     }
 
-    if (!parentId) {
+    if (!isReply) {
       // create normal post
       const newPost = await prisma.post.create({
-        data: { authorId: author, content: content },
+        data: newPostData,
         include: {
           author: {
             select: {
@@ -35,7 +53,7 @@ const createPost = async (req, res, next) => {
       // create reply post
       const [replyPost] = await prisma.$transaction([
         prisma.post.create({
-          data: { authorId: author, content: content, parentId: parentId },
+          data: newPostData,
           include: {
             author: {
               select: {
