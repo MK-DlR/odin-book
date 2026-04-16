@@ -11,7 +11,7 @@ const createPost = async (req, res, next) => {
 
     // guard against empty posts
     if (!content) {
-      return res.status(400).json({ error: "Post must have content." });
+      return res.status(400).json({ error: "Posts must have content." });
     }
 
     if (!parentId) {
@@ -77,9 +77,8 @@ const deletePost = async (req, res, next) => {
 
     if (!parentId) {
       // delete normal post
-      // TODO: make sure reposts/likes are deleted
-      // work on this once reposts/likes functionality is added
-      // DONE: replies are correctly orphaned
+      // TODO: make sure reposts are deleted
+      // should be functional, but need repost functionality to test
       await prisma.post.delete({
         where: { id: postId },
       });
