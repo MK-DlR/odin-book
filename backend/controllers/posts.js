@@ -2,9 +2,13 @@
 
 // imports
 const { prisma } = require("../lib/prisma.js");
+const {
+  createNormalPost,
+  createQuotePost,
+  createReplyPost,
+} = require("../helpers/createPosts.js");
 
-// create post/reply/repost
-// TODO: handle quote reposts (a post attached to quotedId)
+// create post/quote/reply
 const createPost = async (req, res, next) => {
   try {
     const { content, parentId, quotedId } = req.body;
@@ -42,89 +46,21 @@ const createPost = async (req, res, next) => {
         .json({ error: "Post cannot be both a reply and a quote." });
     }
 
-    // create post data
-    const newPostData = {
-      authorId: author,
-      content,
-      parentId: isReply ? parentId : null,
-      wasReply: isReply,
-    };
-
     // create normal post
     if (!isReply && !quotedId) {
-      const newPost = await prisma.post.create({
-        data: newPostData,
-        include: {
-          author: {
-            select: {
-              id: true,
-              username: true,
-              displayName: true,
-              icon: true,
-            },
-          },
-        },
-      });
-
+      const newPost = await createNormalPost({ author, content });
       return res.status(200).json({ posts: newPost });
     }
 
     // create quote repost
     if (!isReply) {
-      const [quotePost] = await prisma.$transaction([
-        prisma.post.create({
-          data: {
-            authorId: author,
-            content,
-            quotedId,
-            wasReply: false,
-          },
-          include: {
-            author: {
-              select: {
-                id: true,
-                username: true,
-                displayName: true,
-                icon: true,
-              },
-            },
-          },
-        }),
-
-        // increment repostCount
-        prisma.post.update({
-          where: { id: quotedId },
-          data: { repostCount: { increment: 1 } },
-        }),
-      ]);
-
+      const quotePost = await createQuotePost({ author, content, quotedId });
       return res.status(200).json({ posts: quotePost });
     }
 
     // create reply post
     if (isReply) {
-      const [replyPost] = await prisma.$transaction([
-        prisma.post.create({
-          data: newPostData,
-          include: {
-            author: {
-              select: {
-                id: true,
-                username: true,
-                displayName: true,
-                icon: true,
-              },
-            },
-          },
-        }),
-
-        // increment replyCount
-        prisma.post.update({
-          where: { id: parentId },
-          data: { replyCount: { increment: 1 } },
-        }),
-      ]);
-
+      const replyPost = await createReplyPost({ author, content, parentId });
       return res.status(200).json({ posts: replyPost });
     }
   } catch (err) {
