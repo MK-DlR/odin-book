@@ -18,4 +18,7 @@ router.post("/repost/:id", authJWT, postsController.manageRepost);
 // like routes
 router.post("/like/:id", authJWT, postsController.manageLike);
 
+// feed routes
+router.get("/feed", authJWT, postsController.getFeed);
+
 module.exports = router;

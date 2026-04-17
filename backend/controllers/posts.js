@@ -124,9 +124,48 @@ const manageLike = async (req, res, next) => {
   }
 };
 
+// get posts to populate feed
+const getFeed = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { limit = 20, cursor } = req.query; // cursor for pagination
+
+    // get user's following list
+    const following = await prisma.follow.findMany({
+      where: { followerId: userId },
+      select: { followingId: true },
+    });
+
+    const followingIds = following.map((f) => f.followingId);
+    followingIds.push(userId); // include own posts
+
+    // fetch posts from user and people they follow
+    const posts = await prisma.post.findMany({
+      where: {
+        authorId: { in: followingIds },
+        parentId: null, // exclude replies from main feed
+      },
+      include: {
+        author: true,
+        repost: { where: { userId } }, // check if current user reposted
+        like: { where: { userId } }, // check if current user liked
+        _count: { select: { replies: true, repost: true, like: true } },
+      },
+      orderBy: { createdAt: "desc" },
+      take: limit,
+      ...(cursor && { skip: 1, cursor: { id: parseInt(cursor) } }),
+    });
+
+    return res.status(200).json({ posts });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   createPost,
   deletePost,
   manageRepost,
   manageLike,
+  getFeed,
 };
