@@ -9,6 +9,7 @@ const {
   createReplyPost,
 } = require("../helpers/createPostHelpers.js");
 const { deletePostHelper } = require("../helpers/deletePostHelper.js");
+const { toggleRelation } = require("../helpers/toggleRelation.js");
 
 // create post/quote/reply
 const createPost = async (req, res, next) => {
@@ -90,58 +91,17 @@ const manageRepost = async (req, res, next) => {
     const postId = Number(req.params.id);
     const userId = req.user.id;
 
-    const existing = await prisma.repost.findUnique({
-      where: {
-        userId_postId: {
-          userId,
-          postId,
-        },
-      },
+    const isReposted = await toggleRelation(
+      userId,
+      postId,
+      "repost",
+      "repostCount",
+    );
+
+    return res.status(201).json({
+      message: isReposted ? "Created reposted post" : "Deleted reposted post",
+      isReposted,
     });
-
-    // if already reposted, remove repost
-    if (existing) {
-      await prisma.$transaction([
-        prisma.repost.delete({
-          where: {
-            userId_postId: {
-              userId,
-              postId,
-            },
-          },
-        }),
-
-        // decrement repostCount
-        prisma.post.update({
-          where: { id: postId },
-          data: { repostCount: { decrement: 1 } },
-        }),
-      ]);
-
-      return res
-        .status(201)
-        .json({ message: "Repost removed", isReposted: false });
-    } else {
-      // if not reposted, create repost
-      await prisma.$transaction([
-        prisma.repost.create({
-          data: {
-            userId,
-            postId,
-          },
-        }),
-
-        // increment repostCount
-        prisma.post.update({
-          where: { id: postId },
-          data: { repostCount: { increment: 1 } },
-        }),
-      ]);
-
-      return res
-        .status(201)
-        .json({ message: "Repost created", isReposted: true });
-    }
   } catch (err) {
     return next(err);
   }
@@ -153,54 +113,12 @@ const manageLike = async (req, res, next) => {
     const postId = Number(req.params.id);
     const userId = req.user.id;
 
-    const existing = await prisma.like.findUnique({
-      where: {
-        userId_postId: {
-          userId,
-          postId,
-        },
-      },
+    const isLiked = await toggleRelation(userId, postId, "like", "likeCount");
+
+    return res.status(201).json({
+      message: isLiked ? "Liked post" : "Unliked post",
+      isLiked,
     });
-
-    // if already liked, unlike
-    if (existing) {
-      await prisma.$transaction([
-        prisma.like.delete({
-          where: {
-            userId_postId: {
-              userId,
-              postId,
-            },
-          },
-        }),
-
-        // decrement likeCount
-        prisma.post.update({
-          where: { id: postId },
-          data: { likeCount: { decrement: 1 } },
-        }),
-      ]);
-
-      return res.status(201).json({ message: "Unliked post", isLiked: false });
-    } else {
-      // if not liked, add like
-      await prisma.$transaction([
-        prisma.like.create({
-          data: {
-            userId,
-            postId,
-          },
-        }),
-
-        // increment likeCount
-        prisma.post.update({
-          where: { id: postId },
-          data: { likeCount: { increment: 1 } },
-        }),
-      ]);
-
-      return res.status(201).json({ message: "Liked post", isLiked: true });
-    }
   } catch (err) {
     return next(err);
   }
