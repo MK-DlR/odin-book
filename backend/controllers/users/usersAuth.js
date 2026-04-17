@@ -155,21 +155,26 @@ const loginUser = async (req, res, next) => {
         usernameNormalized: lowercaseUser,
       },
     });
-    if (result) {
-      // compare password
-      const isMatch = await bcrypt.compare(req.body.password, result.password);
 
-      // password correct
-      if (isMatch) {
-        const token = jwt.sign(
-          { id: result.id }, // payload
-          process.env.JWT_SECRET,
-          { expiresIn: process.env.JWT_EXPIRES_IN },
-        );
-        res.status(200).json({ token });
-      } else {
-        return res.status(401).json({ error: "Invalid credentials." });
-      }
+    if (!result) {
+      return res.status(401).json({ error: "Invalid credentials." });
+    }
+
+    // check if user has a password
+    if (!result.password) {
+      return res.status(400).json({
+        error:
+          "This account uses OAuth login. Please use GitHub or Bluesky to sign in.",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, result.password);
+
+    if (isMatch) {
+      const token = jwt.sign({ id: result.id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      });
+      res.status(200).json({ token });
     } else {
       // user not found
       return res.status(401).json({ error: "Invalid credentials." });
