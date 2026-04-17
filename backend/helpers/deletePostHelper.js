@@ -4,7 +4,7 @@
 const { prisma } = require("../lib/prisma.js");
 
 // normal posts
-const deletePostHelper = async ({ postId }) => {
+const deletePostHelper = async (postId) => {
   // find post
   const post = await prisma.post.findUnique({
     where: { id: postId },
@@ -17,25 +17,32 @@ const deletePostHelper = async ({ postId }) => {
   const parentId = post?.parentId;
   const quotedId = post?.quotedId;
 
-  // determine post type
-  let type = "normal";
-  if (parentId) type = "reply";
-  if (quotedId) type = "quote";
+  // delete normal post
+  if (!parentId && !quotedId) {
+    await prisma.post.delete({ where: { id: postId } });
+  }
 
-  // TODO: run appropriate transaction/delete
-  // TODO: return success indicator
+  // delete reply post
+  if (parentId) {
+    await prisma.$transaction([
+      prisma.post.delete({ where: { id: postId } }),
+      prisma.post.update({
+        where: { id: parentId },
+        data: { replyCount: { decrement: 1 } },
+      }),
+    ]);
+  }
 
-  /*
-  return prisma.post.create({
-    data: {
-      authorId: author,
-      content,
-      parentId: null,
-      wasReply: false,
-    },
-    ...postWithAuthor,
-  });
-  */
+  // delete quote post
+  if (quotedId) {
+    await prisma.$transaction([
+      prisma.post.delete({ where: { id: postId } }),
+      prisma.post.update({
+        where: { id: quotedId },
+        data: { repostCount: { decrement: 1 } },
+      }),
+    ]);
+  }
 };
 
 module.exports = {

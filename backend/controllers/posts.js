@@ -76,65 +76,9 @@ const deletePost = async (req, res, next) => {
   try {
     const postId = Number(req.params.id);
 
-    // find post type info
-    const post = await prisma.post.findUnique({
-      where: { id: postId },
-      select: {
-        parentId: true,
-        quotedId: true,
-      },
-    });
+    await deletePostHelper(postId);
 
-    const parentId = post?.parentId;
-    const quotedId = post?.quotedId;
-
-    // classify post type
-    let type = "normal";
-    if (parentId) type = "reply";
-    if (quotedId) type = "quote";
-
-    switch (type) {
-      // delete normal post
-      case "normal": {
-        await prisma.post.delete({
-          where: { id: postId },
-        });
-
-        return res.status(200).json({ message: "Post successfully deleted." });
-      }
-
-      // delete reply post
-      case "reply": {
-        await prisma.$transaction([
-          prisma.post.delete({
-            where: { id: postId },
-          }),
-
-          prisma.post.update({
-            where: { id: parentId },
-            data: { replyCount: { decrement: 1 } },
-          }),
-        ]);
-
-        return res.status(200).json({ message: "Post successfully deleted." });
-      }
-
-      // delete quote post
-      case "quote": {
-        await prisma.$transaction([
-          prisma.post.delete({
-            where: { id: postId },
-          }),
-
-          prisma.post.update({
-            where: { id: quotedId },
-            data: { repostCount: { decrement: 1 } },
-          }),
-        ]);
-
-        return res.status(200).json({ message: "Post successfully deleted." });
-      }
-    }
+    return res.status(200).json({ message: "Post successfully deleted." });
   } catch (err) {
     return next(err);
   }
