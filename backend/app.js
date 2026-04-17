@@ -4,6 +4,8 @@ require("dotenv").config();
 
 // imports
 const express = require("express");
+const session = require("express-session");
+const passport = require("passport");
 const path = require("path");
 const { prisma } = require("./lib/prisma");
 const cors = require("cors");
@@ -20,6 +22,23 @@ app.use(
     origin: process.env.FRONTEND_URL || "http://localhost:5173",
   }),
 );
+
+// session configuration
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
+  }),
+);
+
+// passport initialization
+app.use(passport.initialize());
+app.use(passport.session());
+
+// TODO: strategy loading
+// github strategy file (needs creating first)
 
 // routes
 app.get("/", (req, res) => {
