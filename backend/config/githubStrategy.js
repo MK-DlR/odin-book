@@ -1,7 +1,7 @@
 // backend/config/githubStrategy.js
 
 // imports
-const { Strategy } = require("passport-github2");
+const { Strategy: GitHubStrategy } = require("passport-github");
 const { prisma } = require("../lib/prisma");
 
 const {
@@ -15,18 +15,63 @@ const githubAuth = new GitHubStrategy(
   {
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/github/callback",
+    callbackURL: "http://localhost:3000/auth/github/callback",
   },
   async (accessToken, refreshToken, profile, done) => {
     // TODO:
     // store accessToken / refreshToken
-    // profile = username, email, avatar/icon
+
+    // fetch emails from github api if not in profile
+    let emails = profile.emails;
+    if (!emails || emails.length === 0) {
+      try {
+        const response = await fetch("https://api.github.com/user/emails", {
+          headers: {
+            Authorization: `token ${accessToken}`,
+            "User-Agent": "odin-book-app",
+          },
+        });
+        const emailData = await response.json();
+
+        // check if got an error response
+        if (Array.isArray(emailData)) {
+          // find primary email
+          const primaryEmail = emailData.find((e) => e.primary);
+          if (primaryEmail) {
+            emails = [{ value: primaryEmail.email }];
+          }
+        } else {
+          console.error("GitHub email API error:", emailData.message);
+        }
+      } catch (err) {
+        console.error("Error fetching emails:", err);
+      }
+    }
 
     // extract github profile information
     const githubId = profile.id;
     const githubUsername = profile.username;
-    const githubEmail = profile.emails[0].value;
-    const githubAvatar = profile.photos[0].value;
+    const githubEmail = emails?.[0]?.value || null;
+    const githubAvatar = profile.photos?.[0]?.value || null;
+    const githubDisplayName = profile.displayName;
+
+    // require email for account creation
+    if (!githubEmail) {
+      return done(null, false, {
+        message: "GitHub account must have a public email address.",
+      });
+    }
+
+    // validate username and email format
+    const usernameErrors = validateUsername(githubUsername);
+    const emailErrors = validateEmail(githubEmail);
+
+    if (usernameErrors.length > 0 || emailErrors.length > 0) {
+      // github data doesn't meet standards
+      return done(null, false, {
+        message: "GitHub profile data doesn't meet requirements.",
+      });
+    }
 
     try {
       // search for user by github username
@@ -64,27 +109,32 @@ const githubAuth = new GitHubStrategy(
           // existing user with email not found, check if username is available
           const existingUsername = await prisma.user.findFirst({
             where: {
-              usernameNormalized: githubUsername,
+              usernameNormalized: githubUsername.toLowerCase(),
             },
           });
 
           if (!existingUsername) {
-            // TODO:
-            // if available: create user
+            // username available, create user
+            const newUser = await prisma.user.create({
+              data: {
+                username: githubUsername,
+                usernameNormalized: githubUsername.toLowerCase(),
+                email: githubEmail,
+                githubId: githubId,
+                displayName: githubDisplayName,
+                icon: githubAvatar,
+              },
+            });
+
+            return done(null, newUser);
           } else {
-            // TODO:
-            // if not available:
-            // redirect to where user can pick username
-            // return error with message:
-            // return done(null, false, { message: "Username taken" })
+            // username not available
+            return done(null, false, { message: "Username taken" });
           }
         }
       }
-
-      // done(null, user) = success, here's the user
-      // done(null, false, { message: "Username taken" }) error, passport will handle
-      // done(err) = database error
     } catch (err) {
+      console.error("Strategy error:", err);
       done(err);
     }
   },
@@ -116,31 +166,6 @@ const deserializeUser = async (id, done) => {
     done(err);
   }
 };
-
-// -------------
-// when github returns user's info (username, email, avatar/icon)
-// GET /auth/github/callback
-
-// check if:
-// user with githubId already exists in database
-
-// if yes: log them in
-// issue JWT
-
-// if no: create new user with that data
-// if github username available:
-// use it
-// creates user and issues JWT
-// if github username not available:
-// return error to frontend
-// let frontend handle username selection form
-// redirect to special route that handles username selection
-// user submits new username
-// POST /auth/github/choose-username with new username
-// creates user and issues JWT
-
-// if email matches existing manual user:
-// auto link them
 
 module.exports = {
   githubAuth,

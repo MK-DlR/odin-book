@@ -37,13 +37,24 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// TODO: strategy loading
-// github strategy file (needs creating first)
+// load passport strategies
+const {
+  githubAuth,
+  serializeUser,
+  deserializeUser,
+} = require("./config/githubStrategy");
+
+passport.use("github", githubAuth);
+passport.serializeUser(serializeUser);
+passport.deserializeUser(deserializeUser);
 
 // routes
 app.get("/", (req, res) => {
   res.json({ message: "API running" });
 });
+
+const authRoutes = require("./routes/auth");
+app.use("/auth", authRoutes);
 
 const postsRouter = require("./routes/posts.js");
 app.use("/posts", postsRouter);
