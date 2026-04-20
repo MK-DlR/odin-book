@@ -93,8 +93,9 @@ const getProfile = async (req, res, next) => {
         following: true,
       },
     });
+
     if (result) {
-      // return user
+      // return found user
       res.status(200).json({ result });
     } else {
       // user not found

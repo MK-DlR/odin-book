@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const { prisma } = require("../../lib/prisma.js");
 const e = require("express");
 
+const { validateUsername } = require("../../helpers/validateUsername.js");
+
 // TODO:
 // registration and login
 // should be able to use
@@ -32,27 +34,7 @@ const registerUser = async (req, res, next) => {
     const { username, email, password, confirmPassword } = req.body;
 
     // check if username meets requirements
-    function validateUsername(username) {
-      const errors = [];
-
-      // check username is between 2 and 32 characters
-      if (username.length < 2) {
-        errors.push("Username must be at least 2 characters.");
-      }
-      if (username.length > 32) {
-        errors.push("Username must be 32 characters or less.");
-      }
-
-      // check valid characters
-      const pattern = /^[a-zA-Z0-9._-]+$/;
-      if (!pattern.test(username)) {
-        errors.push(
-          "Username contains invalid characters. Only letters, numbers, periods, and underscores are allowed.",
-        );
-      }
-
-      return errors;
-    }
+    validateUsername(username);
 
     const usernameErrors = validateUsername(username);
     errors = errors.concat(usernameErrors);
