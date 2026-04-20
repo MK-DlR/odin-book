@@ -4,6 +4,13 @@
 const { Strategy } = require("passport-github2");
 const { prisma } = require("../lib/prisma");
 
+const {
+  validateUsername,
+  checkUsernameAvailability,
+  validateEmail,
+  checkEmailAvailability,
+} = require("../helpers/validationHelpers");
+
 const githubAuth = new GitHubStrategy(
   {
     clientID: process.env.GITHUB_CLIENT_ID,
@@ -57,7 +64,7 @@ const githubAuth = new GitHubStrategy(
           // existing user with email not found, check if username is available
           const existingUsername = await prisma.user.findFirst({
             where: {
-              username: githubUsername,
+              usernameNormalized: githubUsername,
             },
           });
 

@@ -7,7 +7,12 @@ const jwt = require("jsonwebtoken");
 const { prisma } = require("../../lib/prisma.js");
 const e = require("express");
 
-const { validateUsername } = require("../../helpers/validateUsername.js");
+const {
+  validateUsername,
+  checkUsernameAvailability,
+  validateEmail,
+  checkEmailAvailability,
+} = require("../../helpers/validationHelpers.js");
 
 // TODO:
 // registration and login
@@ -32,47 +37,24 @@ const registerUser = async (req, res, next) => {
 
   try {
     const { username, email, password, confirmPassword } = req.body;
+    const lowercaseUser = username.toLowerCase();
 
     // check if username meets requirements
-    validateUsername(username);
-
     const usernameErrors = validateUsername(username);
     errors = errors.concat(usernameErrors);
 
-    // convert username to lowercase
-    const lowercaseUser = username.toLowerCase();
-
-    // check if username already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { usernameNormalized: lowercaseUser },
-    });
-
-    if (existingUser) {
-      errors.push("Username already taken.");
-    }
-
-    // check if email already exists
-    const existingEmail = await prisma.user.findUnique({
-      where: { email: email },
-    });
-
-    if (existingEmail) {
-      errors.push("Email already in use.");
-    }
+    // check if username is available
+    const usernameAvailabilityErrors =
+      await checkUsernameAvailability(username);
+    errors = errors.concat(usernameAvailabilityErrors);
 
     // check if email meets requirements
-    function validateEmail(email) {
-      const errors = [];
-
-      // check email format
-      let emailRegex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
-      if (!emailRegex.test(email)) errors.push("Please enter a valid email.");
-
-      return errors;
-    }
-
     const emailErrors = validateEmail(email);
     errors = errors.concat(emailErrors);
+
+    // check if email is available
+    const emailAvailabilityErrors = await checkEmailAvailability(email);
+    errors = errors.concat(emailAvailabilityErrors);
 
     // check if password meets requirements
     function validatePassword(password) {
