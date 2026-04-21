@@ -7,12 +7,7 @@ const passport = require("passport");
 
 router.get(
   "/github",
-  (req, res, next) => {
-    const authURL = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=http://localhost:3000/auth/github/callback&scope=user`;
-    console.log("Expected OAuth URL:", authURL);
-    next();
-  },
-  passport.authenticate("github", { scope: ["user"] }),
+  passport.authenticate("github", { scope: ["user:email"] }),
 );
 
 router.get(

@@ -6,9 +6,7 @@ const { prisma } = require("../lib/prisma");
 
 const {
   validateUsername,
-  checkUsernameAvailability,
   validateEmail,
-  checkEmailAvailability,
 } = require("../helpers/validationHelpers");
 
 const githubAuth = new GitHubStrategy(
@@ -55,24 +53,6 @@ const githubAuth = new GitHubStrategy(
     const githubAvatar = profile.photos?.[0]?.value || null;
     const githubDisplayName = profile.displayName;
 
-    // require email for account creation
-    if (!githubEmail) {
-      return done(null, false, {
-        message: "GitHub account must have a public email address.",
-      });
-    }
-
-    // validate username and email format
-    const usernameErrors = validateUsername(githubUsername);
-    const emailErrors = validateEmail(githubEmail);
-
-    if (usernameErrors.length > 0 || emailErrors.length > 0) {
-      // github data doesn't meet standards
-      return done(null, false, {
-        message: "GitHub profile data doesn't meet requirements.",
-      });
-    }
-
     try {
       // search for user by github username
       const existingGithubUser = await prisma.user.findUnique({
@@ -106,6 +86,24 @@ const githubAuth = new GitHubStrategy(
           // return linked user
           return done(null, updatedGithubUser);
         } else {
+          // require email for account creation
+          if (!githubEmail) {
+            return done(null, false, {
+              message: "GitHub account must have a public email address.",
+            });
+          }
+
+          // validate username and email format
+          const usernameErrors = validateUsername(githubUsername);
+          const emailErrors = validateEmail(githubEmail);
+
+          if (usernameErrors.length > 0 || emailErrors.length > 0) {
+            // github data doesn't meet standards
+            return done(null, false, {
+              message: "GitHub profile data doesn't meet requirements.",
+            });
+          }
+
           // existing user with email not found, check if username is available
           const existingUsername = await prisma.user.findFirst({
             where: {
