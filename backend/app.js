@@ -13,6 +13,8 @@ const cors = require("cors");
 // initialize app
 const app = express();
 
+app.set("trust proxy", 1);
+
 // middleware
 app.use(express.json()); // parse json for apis
 app.use(express.urlencoded({ extended: true })); // parse form data
@@ -30,7 +32,10 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
+    rolling: true,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
   }),
 );
 
@@ -62,6 +67,28 @@ app.use("/posts", postsRouter);
 
 const usersRouter = require("./routes/users.js");
 app.use("/users", usersRouter);
+
+app.get("/debug-session", (req, res) => {
+  res.json({
+    session: req.session,
+    passport: req.session?.passport,
+    user: req.user,
+    cookies: req.headers.cookie || null,
+  });
+});
+
+// login check and troubleshooting
+app.get("/me", (req, res) => {
+  console.log("COOKIES:", req.headers.cookie);
+  console.log("SESSION ID:", req.sessionID);
+  console.log("USER:", req.user);
+  console.log("SESSION:", req.session);
+  console.log("PASSPORT:", req.session.passport);
+  res.json({
+    user: req.user || null,
+    authenticated: req.isAuthenticated(),
+  });
+});
 
 // 404 handler
 app.use((req, res) => {

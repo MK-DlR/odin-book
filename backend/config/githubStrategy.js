@@ -145,10 +145,18 @@ const serializeUser = (user, done) => {
 
 // take ID from session and look up full user from database
 const deserializeUser = async (id, done) => {
+  console.log("DESERIALIZING ID:", id);
+
+  const userId = parseInt(id, 10);
+
+  if (Number.isNaN(userId)) {
+    return done(null, false);
+  }
+
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: id,
+        id: userId,
       },
       select: {
         id: true,
