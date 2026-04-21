@@ -1,14 +1,22 @@
 // frontend/src/App.jsx
 
-function App() {
+// imports
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import Register from './pages/Register.jsx'
+import Login from './pages/Login.jsx'
+import Home from './pages/Home.jsx'
+
+function App() {
   return (
-    <>
-      <div>
-        hi
-      </div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App
