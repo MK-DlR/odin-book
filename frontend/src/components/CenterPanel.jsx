@@ -1,5 +1,7 @@
 // frontend/src/components/CenterPanel.jsx
 
+import UserFeed from "./MainPanel/UserFeed";
+
 // imports
 
 function CenterPanel() {
@@ -8,8 +10,13 @@ function CenterPanel() {
     return (
         <div className="center-panel">
             center panel
+            <UserFeed />
         </div>
     )
 }
 
 export default CenterPanel;
+
+// will utilize a switch statement
+// to determine content
+// see: messaging-app
