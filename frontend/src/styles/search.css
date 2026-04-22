@@ -9,7 +9,7 @@
     padding: 5px 10px 5px 30px; /* extra left padding for icon */
     border-radius: 8px;
     border: 1px solid transparent; /* hide border */
-    background-color: var(--light-grey);
+    background-color: var(--medium-blue);
 }
 
 .search-icon {
@@ -23,20 +23,20 @@
 
 /* hover behaviours */
 #search-container:hover #search-input {
-    border: 1px solid var(--white);
+    border: 1px solid var(--grey-blue);
 }
 
 #search-container:hover .search-icon {
-    color: var(--white);
+    color: var(--lightest-blue);
 }
 
 /* focused behaviours */
 #search-container:focus-within #search-input {
-    background-color: var(--darkest-grey);
-    border: 1px solid var(--pink);
+    background-color: var(--dark-blue);
+    border: 1px solid var(--accent);
     outline: none;
 }
 
 #search-container:focus-within .search-icon {
-    color: var(--pink);
+    color: var(--accent);
 }

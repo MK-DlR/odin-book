@@ -1,0 +1,11 @@
+/* frontend/src/styles/base.css */
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* entire background */
+body {
+  background-color: var(--darkest-blue);
+}

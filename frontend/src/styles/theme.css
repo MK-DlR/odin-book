@@ -2,11 +2,12 @@
 
 /* theme variables */
 :root {
-  --black: #000000;
-  --darkest-grey: #7c7c7c;
-  --dark-grey: #a9a9a9;
-  --light-grey: #d3d3d3;
-  --white: #f0f0f0;
-  --pink: #FE4CCE;
-  --light-pink: #f186d5;
+    --accent: #0F73FF;
+    --white: #FFFFFF;
+    --darkest-blue: #151D28;
+    --dark-blue: #122136;
+    --medium-blue: #222E3F;
+    --light-blue: #6F839F;
+    --lightest-blue: #BEC9DD;
+    --grey-blue: #313A4E;
 }
