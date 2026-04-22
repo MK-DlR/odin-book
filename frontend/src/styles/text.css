@@ -1,5 +1,6 @@
 /* frontend/src/styles/text.css */
 
+/* right panel text */
 .right-links, 
 .right-links a:link, 
 .right-links a:visited, 
@@ -11,7 +12,7 @@
 .right-links a:link, 
 .right-links a:visited {
     text-decoration: none;
-  }
+}
 
 .right-links a:hover, 
 .right-links a:active {

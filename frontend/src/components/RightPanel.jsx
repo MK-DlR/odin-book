@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 function RightPanel() {
-
     // search input
     const searchBar = 
         <div id="search-container">
@@ -16,9 +15,6 @@ function RightPanel() {
             />
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
         </div>
-
-    // TODO: active vs inactive search 
-    // should have different colored icons
 
     return (
         <div className="right-panel">
