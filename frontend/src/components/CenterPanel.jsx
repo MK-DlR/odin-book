@@ -1,16 +1,17 @@
 // frontend/src/components/CenterPanel.jsx
 
-import UserFeed from "./MainPanel/UserFeed";
-
 // imports
+import UserFeed from "./CenterPanel/UserFeed";
 
 function CenterPanel() {
     // code here
 
     return (
         <div className="center-panel">
-            center panel
-            <UserFeed />
+            <div className="center-content">
+                center panel
+                <UserFeed />
+            </div>
         </div>
     )
 }

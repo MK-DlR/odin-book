@@ -10,7 +10,6 @@ function Home() {
 
     return (
         <div className="panel-container">
-            i'm the home page, i contain the:
             <LeftPanel />
             <CenterPanel />
             <RightPanel />

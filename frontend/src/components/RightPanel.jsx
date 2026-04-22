@@ -18,9 +18,11 @@ function RightPanel() {
 
     return (
         <div className="right-panel">
-            {searchBar}
-            <div className="right-links">
-                <a href="https://github.com/MK-DlR">Github</a> ∙ <a href="https://www.linkedin.com/in/adrien-newman/">LinkedIn</a>
+            <div className="right-content">
+                {searchBar}
+                <div className="right-links">
+                    <a href="https://github.com/MK-DlR">Github</a> ∙ <a href="https://www.linkedin.com/in/adrien-newman/">LinkedIn</a>
+                </div>
             </div>
         </div>
     )

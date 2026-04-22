@@ -7,7 +7,9 @@ function LeftPanel() {
 
     return (
         <div className="left-panel">
-            left panel
+            <div className="left-content">
+                left panel
+            </div>
         </div>
     )
 }

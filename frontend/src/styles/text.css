@@ -1,5 +1,15 @@
 /* frontend/src/styles/text.css */
 
+/* left panel text */
+.left-panel {
+    color: var(--white);
+}
+
+/* center panel text */
+.center-panel {
+    color: var(--white);
+}
+
 /* right panel text */
 .right-links, 
 .right-links a:link, 

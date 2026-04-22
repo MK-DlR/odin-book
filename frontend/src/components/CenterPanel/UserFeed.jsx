@@ -1,4 +1,4 @@
-// frontend/src/components/MainPanel/UserFeed.jsx
+// frontend/src/components/CenterPanel/UserFeed.jsx
 
 // imports
 
