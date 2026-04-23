@@ -1,0 +1,6 @@
+/* frontend/src/styles/LeftPanel/tabs.css */
+
+.tabs-container {
+    display: flex;
+    flex-direction: column;
+}

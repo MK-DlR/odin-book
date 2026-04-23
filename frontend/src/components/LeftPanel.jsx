@@ -24,17 +24,53 @@ import {
 
 function LeftPanel() {
     const activeUser = 
-    // TODO: check for active user and render their icon
+    // TODO: 
+    // check for active user and render their icon
     // should toggle dropdown
     // with options:
     // "[icon] go to profile"
     // "[icon] log out"
-
         <div className="active-user">
             active user icon
         </div>
 
-    // TODO: move button tabs here so they can render conditionally?
+    const panelTabs = 
+    // TODO: 
+    // when window is narrow
+    // only show icons, no text
+    // "twitter style breakpoint behaviour"
+    // TODO: 
+    // conditionally show solid icons
+    // when they're clicked/their tab is active
+        <div className="tabs-container">
+            <div className="home-tab">
+                <FontAwesomeIcon icon={faHomeRegular} className="home-icon nav-icon" /> Home
+            </div>
+
+            <div className="explore-tab">
+                <FontAwesomeIcon icon={faExploreRegular} className="explore-icon nav-icon" /> Explore
+            </div>
+
+            <div className="notif-tab">
+                <FontAwesomeIcon icon={faNotifRegular} className="notif-icon nav-icon" /> Notifications
+            </div>
+
+            <div className="users-tab">
+                <FontAwesomeIcon icon={faUsersRegular} className="users-icon nav-icon" /> Users
+            </div>
+
+            <div className="saved-tab">
+                <FontAwesomeIcon icon={faSavedRegular} className="saved-icon nav-icon" /> Saved
+            </div>
+
+            <div className="profile-tab">
+                <FontAwesomeIcon icon={faProfileRegular} className="profile-icon nav-icon" /> Profile
+            </div>
+
+            <div className="settings-tab">
+                <FontAwesomeIcon icon={faSettingsRegular} className="settings-icon nav-icon" /> Settings
+            </div>
+        </div>
 
     const newPost = 
         <div className="new-post button">
@@ -45,42 +81,13 @@ function LeftPanel() {
         <div className="left-panel">
             <div className="left-content">
                 {activeUser}
-                <div className="home-tab">
-                    <FontAwesomeIcon icon={faHomeRegular} className="home-icon nav-icon" /> Home
-                </div>
-
-                <div className="explore-tab">
-                    <FontAwesomeIcon icon={faExploreRegular} className="explore-icon nav-icon" /> Explore
-                </div>
-
-                <div className="notif-tab">
-                    <FontAwesomeIcon icon={faNotifRegular} className="notif-icon nav-icon" /> Notifications
-                </div>
-
-                <div className="users-tab">
-                    <FontAwesomeIcon icon={faUsersRegular} className="users-icon nav-icon" /> Users
-                </div>
-
-                <div className="saved-tab">
-                    <FontAwesomeIcon icon={faSavedRegular} className="saved-icon nav-icon" /> Saved
-                </div>
-
-                <div className="profile-tab">
-                    <FontAwesomeIcon icon={faProfileRegular} className="profile-icon nav-icon" /> Profile
-                </div>
-
-                <div className="settings-tab">
-                    <FontAwesomeIcon icon={faSettingsRegular} className="settings-icon nav-icon" /> Settings
-                </div>
+                {panelTabs}
                 {newPost}
             </div>
         </div>
     )
 }
 
-// TODO: nowrap on tabs
-
-// TODO: conditionally show below icons when tab is active/clicked on:
 // <FontAwesomeIcon icon={faHomeSolid} className="home-icon nav-icon" /> 
 // <FontAwesomeIcon icon={faExploreSolid} className="explore-icon nav-icon" /> 
 // <FontAwesomeIcon icon={faNotifSolid} className="notif-icon nav-icon" /> 

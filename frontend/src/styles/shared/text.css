@@ -1,4 +1,4 @@
-/* frontend/src/styles/text.css */
+/* frontend/src/styles/shared/text.css */
 
 /* left panel text */
 .left-panel {
@@ -10,7 +10,11 @@
     color: var(--white);
 }
 
-/* right panel text */
+/* right panel text and links */
+.right-panel {
+    color: var(--white);
+}
+
 .right-links, 
 .right-links a:link, 
 .right-links a:visited, 

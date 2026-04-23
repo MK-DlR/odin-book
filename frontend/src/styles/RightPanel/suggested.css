@@ -1,6 +1,5 @@
-/* frontend/src/styles/suggested.css */
+/* frontend/src/styles/RightPanel/suggested.css */
 
 #suggested-container {
-    color: var(--white);
     border: 1px solid green;
 }
