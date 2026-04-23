@@ -1,10 +1,19 @@
 // frontend/src/components/RightPanel.jsx
 
 // imports
+import { useEffect } from "react";
+import suggestUsers from "../helpers/suggestUsers";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 function RightPanel() {
+    // TEMP
+    // logging data
+    useEffect(() => {
+        suggestUsers();
+      }, []);
+
     // search input
     const searchBar = 
         <div id="search-container">
@@ -16,12 +25,9 @@ function RightPanel() {
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
         </div>
 
-    // TODO: 
-    // suggested users box
-    // map through and display
-    // 4 - 5 randomized users (icon + username)
-    // from all (not followed) users
-    // and +follow button
+    // TODO:
+    // map through and display 4 - 5 (pre-filtered) randomized users
+    // with icons and usernames, add functional follow button
     // NOTE: only displays on home page, no other tabs/pages
     const suggestedUsers = 
         <div id="suggested-container">
