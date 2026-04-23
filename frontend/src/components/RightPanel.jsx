@@ -16,10 +16,17 @@ function RightPanel() {
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
         </div>
 
+    // TODO: suggested users
+    const suggestedUsers = 
+        <div id="suggested-container">
+            suggested users goes here
+        </div>
+
     return (
         <div className="right-panel">
             <div className="right-content">
                 {searchBar}
+                {suggestedUsers}
                 <div className="right-links">
                     <a href="https://github.com/MK-DlR">Github</a> ∙ <a href="https://www.linkedin.com/in/adrien-newman/">LinkedIn</a>
                 </div>

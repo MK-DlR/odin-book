@@ -10,6 +10,7 @@
     border-radius: 8px;
     border: 1px solid transparent; /* hide border */
     background-color: var(--medium-blue);
+    color: var(--light-blue);
 }
 
 .search-icon {
@@ -17,7 +18,7 @@
     left: 8px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--dark-grey);
+    color: var(--light-blue);
     pointer-events: none;
 }
 
