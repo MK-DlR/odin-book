@@ -2,7 +2,7 @@
 
 // imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 function RightPanel() {
     // search input
@@ -18,13 +18,18 @@ function RightPanel() {
 
     // TODO: 
     // suggested users box
-    // displays 4 - 5 randomized users (icon + username)
+    // map through and display
+    // 4 - 5 randomized users (icon + username)
     // from all (not followed) users
     // and +follow button
     // NOTE: only displays on home page, no other tabs/pages
     const suggestedUsers = 
         <div id="suggested-container">
-            suggested users goes here
+            Suggested Users
+            <hr />
+            <div className="suggested-content">
+                [icon] [name] <FontAwesomeIcon icon={faUserPlus} className="follow-icon" />
+            </div>
         </div>
 
     const mediaLinks = 

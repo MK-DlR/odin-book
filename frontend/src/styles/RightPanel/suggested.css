@@ -1,5 +1,7 @@
 /* frontend/src/styles/RightPanel/suggested.css */
 
 #suggested-container {
+    border-radius: 8px;
     border: 1px solid green;
+    text-align: center;
 }

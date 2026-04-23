@@ -28,8 +28,8 @@ function LeftPanel() {
     // check for active user and render their icon
     // should toggle dropdown
     // with options:
-    // "[icon] go to profile"
-    // "[icon] log out"
+    // "[svg icon] go to profile"
+    // "[svg icon] log out"
         <div className="active-user">
             active user icon
         </div>
