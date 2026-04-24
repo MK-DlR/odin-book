@@ -5,3 +5,13 @@
     border: 1px solid green;
     text-align: center;
 }
+
+.suggested-icon {
+    width: 50px;
+}
+
+/* 
+TODO:
+make sure icons, usernames, and follow button
+are all aligned vertically with each other
+*/

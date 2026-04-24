@@ -20,25 +20,44 @@ async function suggestUsers() {
       getActiveUser.json(),
     ]);
 
-    // TEMP
-    console.log(allUsers);
-    console.log(activeUser);
-
     // destructure wrapped data
     const { users } = allUsers;
     const { userData } = activeUser;
 
-    // TODO:
-    // filter out already followed users:
-    // create set of followed user ids
-    // map over following array and extract followingId from each object
-    // put those objects into a set
+    // extract followingId values and put into a set
+    const followedUserIds = new Set(
+      userData.following.map((user) => user.followingId),
+    );
 
-    // filter users where
-    // user.id !== userData.id (not the active user)
-    // && user.id is not in set of followed ids
+    // filter out followed users and logged in user
+    const filteredUsers = users.filter(function (user) {
+      return user.id !== userData.id && !followedUserIds.has(user.id);
+    });
+
+    // randomize filteredUsers
+    function randomizedUsers(filteredUsers) {
+      let currentIndex = filteredUsers.length;
+
+      while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [filteredUsers[currentIndex], filteredUsers[randomIndex]] = [
+          filteredUsers[randomIndex],
+          filteredUsers[currentIndex],
+        ];
+      }
+    }
+
+    randomizedUsers(filteredUsers);
+
+    // get 4 users from randomized list
+    const selectedUsers = filteredUsers.slice(0, 4);
+
+    return selectedUsers;
   } catch (err) {
-    return err;
+    console.error("Error fetching suggested users:", err);
+    return [];
   }
 }
 

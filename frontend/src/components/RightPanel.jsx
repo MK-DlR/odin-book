@@ -1,17 +1,24 @@
 // frontend/src/components/RightPanel.jsx
 
 // imports
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import getIconUrl from "../helpers/getIconUrl";
 import suggestUsers from "../helpers/suggestUsers";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 function RightPanel() {
-    // TEMP
-    // logging data
+    const [suggestedUsers, setSuggestedUsers] = useState([]);
+
+    // get randomized suggested users
     useEffect(() => {
-        suggestUsers();
+        const fetchSuggestions = async () => {
+          const users = await suggestUsers();
+          setSuggestedUsers(users);
+        };
+        
+        fetchSuggestions();
       }, []);
 
     // search input
@@ -26,15 +33,28 @@ function RightPanel() {
         </div>
 
     // TODO:
-    // map through and display 4 - 5 (pre-filtered) randomized users
-    // with icons and usernames, add functional follow button
-    // NOTE: only displays on home page, no other tabs/pages
-    const suggestedUsers = 
+    // add follow button functionality
+    // NOTE: suggested users only displays on home page, no other tabs/pages
+    const listOfSuggestedUsers = suggestedUsers.map(user =>
+        <div 
+            key={user.id}
+            className="suggested-user"
+        >
+            <img 
+                className="suggested-icon icon" 
+                src={getIconUrl(user.icon)} 
+            /> 
+                <b>{user.username}</b> 
+                <FontAwesomeIcon icon={faUserPlus} className="follow-icon" />
+        </div>
+    )
+
+    const displaySuggestedUsers = 
         <div id="suggested-container">
             Suggested Users
             <hr />
             <div className="suggested-content">
-                [icon] [name] <FontAwesomeIcon icon={faUserPlus} className="follow-icon" />
+                {listOfSuggestedUsers}
             </div>
         </div>
 
@@ -47,7 +67,7 @@ function RightPanel() {
         <div className="right-panel">
             <div className="right-content">
                 {searchBar}
-                {suggestedUsers}
+                {displaySuggestedUsers}
                 {mediaLinks}
             </div>
         </div>
