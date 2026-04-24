@@ -1,5 +1,10 @@
 /* frontend/src/styles/shared/text.css */
 
+/* shared text and links */
+.bold-link {
+    font-weight: bold;
+}
+
 /* left panel text */
 .left-panel {
     color: var(--white);
@@ -16,19 +21,20 @@
 }
 
 .right-links, 
-.right-links a:link, 
-.right-links a:visited, 
-.right-links a:hover, 
-.right-links a:active {
+.right-links a:visited {
     color: var(--lightest-blue);
 }
 
+.suggested-links {
+    color: var(--white);
+}
+
 .right-links a:link, 
-.right-links a:visited {
+.suggested-links {
     text-decoration: none;
 }
 
 .right-links a:hover, 
-.right-links a:active {
+.suggested-links:hover {
     text-decoration: underline;
 }

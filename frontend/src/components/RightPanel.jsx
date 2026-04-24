@@ -34,6 +34,9 @@ function RightPanel() {
 
     // TODO:
     // add follow button functionality
+    // add link to user's profile
+    // figure out profile preview on hover
+    // hover preview will also be used for usernames on feeds
     // NOTE: suggested users only displays on home page, no other tabs/pages
     const listOfSuggestedUsers = suggestedUsers.map(user =>
         <div 
@@ -44,7 +47,7 @@ function RightPanel() {
                 className="suggested-icon icon" 
                 src={getIconUrl(user.icon)} 
             /> 
-                <b>{user.username}</b> 
+                <a href="PROFILE_LINK" className="bold-link suggested-links">{user.username}</a> 
                 <FontAwesomeIcon icon={faUserPlus} className="follow-icon" />
         </div>
     )
