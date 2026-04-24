@@ -20,6 +20,10 @@
     color: var(--white);
 }
 
+.right-links {
+    margin-top: 20px;
+}
+
 .right-links, 
 .right-links a:visited {
     color: var(--lightest-blue);

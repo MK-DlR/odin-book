@@ -43,18 +43,20 @@ function RightPanel() {
             key={user.id}
             className="suggested-user"
         >
-            <img 
-                className="suggested-icon icon" 
-                src={getIconUrl(user.icon)} 
-            /> 
+            <div className="icon-username">
+                <img 
+                    className="sm-icon" 
+                    src={getIconUrl(user.icon)} 
+                /> 
                 <a href="PROFILE_LINK" className="bold-link suggested-links">{user.username}</a> 
+            </div>
                 <FontAwesomeIcon icon={faUserPlus} className="follow-icon" />
         </div>
     )
 
     const displaySuggestedUsers = 
         <div id="suggested-container">
-            Suggested Users
+            <h3 id="suggested-header">Suggested Users</h3>
             <hr />
             <div className="suggested-content">
                 {listOfSuggestedUsers}

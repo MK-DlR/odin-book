@@ -1,17 +1,38 @@
 /* frontend/src/styles/RightPanel/suggested.css */
 
 #suggested-container {
+    display: flex;
+    flex-direction: column;
     border-radius: 8px;
     border: 1px solid green;
+    margin-top: 20px;
+}
+
+#suggested-header {
     text-align: center;
 }
 
-.suggested-icon {
-    width: 50px;
+.suggested-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 5px;
+}
+
+.suggested-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.icon-username {
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 /* 
 TODO:
-make sure icons, usernames, and follow button
-are all aligned vertically with each other
+suggested-container + content and searchbar
+should be the same width and alignment
 */
