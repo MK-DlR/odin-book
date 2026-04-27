@@ -44,9 +44,3 @@
 #search-container:focus-within .search-icon {
     color: var(--accent);
 }
-
-/* 
-TODO:
-suggested-container + content and searchbar
-should be the same width and alignment
-*/

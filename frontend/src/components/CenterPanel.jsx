@@ -3,7 +3,7 @@
 // imports
 import UserFeed from "./CenterPanel/UserFeed";
 
-function CenterPanel() {
+function CenterPanel(centerPanelView, setCenterPanelView) {
     // code here
 
     return (
