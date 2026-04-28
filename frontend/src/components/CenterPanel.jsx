@@ -2,8 +2,13 @@
 
 // imports
 import EditProfile from "./CenterPanel/EditProfile";
+import Explore from "./CenterPanel/Explore";
+import Notifications from "./CenterPanel/Notifications";
+import Saved from "./CenterPanel/Saved";
+import Settings from "./CenterPanel/Settings";
 import UserFeed from "./CenterPanel/UserFeed";
 import UserProfile from "./CenterPanel/UserProfile";
+import Users from "./CenterPanel/Users";
 
 function CenterPanel({
     currentUser, 
@@ -11,17 +16,10 @@ function CenterPanel({
     centerPanelView, 
     setCenterPanelView
 }) {
-    // TODO:
-    // switch statement 
-    // to determine which view is selected
-
     let title;
     let content;
     
     switch (centerPanelView) {
-        case "editProfile": // user can edit own profile
-            content = <EditProfile />
-            break;
         case "userFeed": // display user's feed
             content = <UserFeed />
             break;
@@ -44,7 +42,3 @@ function CenterPanel({
 }
 
 export default CenterPanel;
-
-// will utilize a switch statement
-// to determine content
-// see: messaging-app
