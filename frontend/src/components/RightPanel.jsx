@@ -51,7 +51,11 @@ function RightPanel(setCenterPanelView) {
                 /> 
                 <a href="PROFILE_LINK" className="bold-link suggested-links">{user.username}</a> 
             </div>
-            <FontAwesomeIcon icon={faUserPlus} className="follow-icon" onClick={followUser}/>
+            <FontAwesomeIcon 
+                icon={faUserPlus} 
+                className="follow-icon" 
+                onClick={() => followUser(user)}
+            />
         </div>
     )
 
