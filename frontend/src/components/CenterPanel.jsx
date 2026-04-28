@@ -20,9 +20,45 @@ function CenterPanel({
     let content;
     
     switch (centerPanelView) {
-        case "userFeed": // display user's feed
+        // LeftPanel tabs
+        case "home": // display user's feed
             content = <UserFeed />
             break;
+        case "explore": // display all posts from all users
+            content = <Explore />
+            break;
+        case "notifications": // display all notifications
+            title = 
+                <div className="header">
+                    <h2>Notifications</h2>
+                </div>
+            content = <Notifications />
+            break;
+        case "allUsers": // display all registered users
+            title = 
+                <div className="header">
+                    <h2>All Users</h2>
+                </div>
+            content = <Users />
+            break;
+        case "saved": // display all liked content
+            title = 
+                <div className="header">
+                    <h2>Saved Posts</h2>
+                </div>
+            content = <Saved />
+            break;
+        case "ownProfile": // display logged in user's profile details
+            content = <UserProfile /> // TODO: should be OWN profile
+            break;
+        case "settings": // display settings menu
+            title = 
+                <div className="header">
+                    <h2>Settings</h2>
+                </div>
+            content = <Settings />
+            break;
+        // other
         case "userProfile": // display selected user's profile details
             content = <UserProfile />
             break;
@@ -34,7 +70,7 @@ function CenterPanel({
     return (
         <div className="center-panel">
             <div className="center-content">
-                center panel
+                {title}
                 {content}
             </div>
         </div>
