@@ -13,6 +13,8 @@ async function followUser(user) {
   );
 
   const data = await response.json();
+
+  // LOGGING
   console.log(`followed/unfollowed ${user.username}`);
   console.log(data);
 }
