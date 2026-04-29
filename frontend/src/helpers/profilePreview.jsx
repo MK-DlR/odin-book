@@ -1,8 +1,8 @@
-// frontend/src/helpers/profilePreview.js
+// frontend/src/helpers/profilePreview.jsx
 
 // imports
 
-// TOOD: display a preview of hovered user's profile
+// TODO: display a preview of hovered user's profile
 function profilePreview() {
   console.log("TOOD: display a preview of hovered user's profile");
 }
