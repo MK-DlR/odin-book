@@ -4,6 +4,7 @@
 import { useState } from "react";
 import apiFetch from "../../helpers/apiFetch";
 
+// TODO: display logged in user's feed
 function UserFeed() {
     const [userFeed, setUserFeed] = useState("");
 

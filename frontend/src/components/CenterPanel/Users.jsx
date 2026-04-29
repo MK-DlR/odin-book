@@ -2,10 +2,11 @@
 
 // imports
 
+// TODO: display all users
 function allUsers() {
     const users = 
         <div className="users tab">
-            users tab placeholder
+            TODO: users tab
         </div>
 
     return (

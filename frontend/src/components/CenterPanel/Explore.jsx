@@ -2,10 +2,11 @@
 
 // imports
 
+// TODO: displays all posts from all users
 function exploreView() {
     const explore = 
         <div className="explore tab">
-            explore tab placeholder
+            TODO: explore tab
         </div>
 
     return (

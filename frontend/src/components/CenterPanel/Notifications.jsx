@@ -2,10 +2,11 @@
 
 // imports
 
+// TODO: display notification activity
 function notifView() {
     const notifications = 
         <div className="notifs tab">
-            notifs tab placeholder
+            TODO: notifs tab
         </div>
 
     return (

@@ -34,11 +34,9 @@ function RightPanel(setCenterPanelView) {
         </div>
 
     // TODO:
-    // add follow button functionality
     // add link to user's profile
     // figure out profile preview on hover
     // hover preview will also be used for usernames on feeds
-    // NOTE: suggested users only displays on home page, no other tabs/pages
     const listOfSuggestedUsers = suggestedUsers.map(user =>
         <div 
             key={user.id}

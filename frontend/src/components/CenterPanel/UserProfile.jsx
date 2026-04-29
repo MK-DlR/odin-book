@@ -2,10 +2,11 @@
 
 // imports
 
+// TODO: display selected user's profile
 function userProfile() {
     const fullProfile = 
         <div className="user-profile">
-            user profile placeholder
+            TODO: user profile
         </div>
 
     return (

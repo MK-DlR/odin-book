@@ -2,10 +2,11 @@
 
 // imports
 
+// TODO: display liked content
 function savedItems() {
     const saved = 
         <div className="saved tab">
-            saved tab placeholder
+            TODO: saved tab
         </div>
 
     return (

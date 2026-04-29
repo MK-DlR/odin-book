@@ -2,10 +2,11 @@
 
 // imports
 
+// TODO: display setting options
 function settingsSelection() {
     const settings = 
         <div className="settings tab">
-            settings tab placeholder
+            TODO: settings tab
         </div>
 
     return (
