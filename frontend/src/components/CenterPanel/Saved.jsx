@@ -4,18 +4,11 @@
 
 // TODO: display liked content
 function SavedItems() {
-    const saved = 
-        <div className="saved tab">
+    return (
+        <div className="saved">
             TODO: saved tab
         </div>
-
-    return (
-        <div className="center-panel">
-            <div className="center-content">
-                {saved}
-            </div>
-        </div>
-    )
+    );
 }
 
 export default SavedItems;

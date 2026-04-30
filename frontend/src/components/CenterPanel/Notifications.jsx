@@ -4,18 +4,11 @@
 
 // TODO: display notification activity
 function NotifView() {
-    const notifications = 
-        <div className="notifs tab">
-            TODO: notifs tab
-        </div>
-
     return (
-        <div className="center-panel">
-            <div className="center-content">
-                {notifications}
-            </div>
+        <div className="notifications">
+            TODO: notifications tab
         </div>
-    )
+    );
 }
 
 export default NotifView;
