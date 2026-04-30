@@ -19,7 +19,7 @@ function CenterPanel({
     let title;
     let content;
     
-    switch (centerPanelView?.type || centerPanelView) {
+    switch (centerPanelView.type) {
         // LeftPanel tabs
         case "home": // display user's feed
             content = <UserFeed />
@@ -49,7 +49,12 @@ function CenterPanel({
             content = <Saved />
             break;
         case "ownProfile": // display logged in user's profile details
-            content = <UserProfile /> // TODO: should be OWN profile
+            content = (
+                <UserProfile 
+                    username={currentUser?.username}
+                    isOwnProfile={true}
+                />
+            );
             break;
         case "settings": // display settings menu
             title = 

@@ -3,7 +3,7 @@
 // imports
 
 // TODO: display selected user's profile
-function UserProfile({ username }) {
+function UserProfile({ username, isOwnProfile }) {
     return (
         <div className="user-profile">
             Viewing profile: {username}

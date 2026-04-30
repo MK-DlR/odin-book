@@ -10,7 +10,9 @@ import RightPanel from "../components/RightPanel";
 
 function Home() {
     const [currentUser, setCurrentUser] = useState(null);
-    const [centerPanelView, setCenterPanelView] = useState("");
+    const [centerPanelView, setCenterPanelView] = useState({
+        type: "home"
+    });
 
     // fetch and store current user's data
     useEffect(() => {
@@ -40,6 +42,7 @@ function Home() {
             <LeftPanel 
                 currentUser={currentUser}
                 setCurrentUser={setCurrentUser}
+                centerPanelView={centerPanelView} 
                 setCenterPanelView={setCenterPanelView}
             />
             <CenterPanel

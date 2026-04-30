@@ -11,18 +11,30 @@ import {
     faPenToSquare as faNewPost,
 } from "@fortawesome/free-regular-svg-icons";
 import { 
-    // faHouse as faHomeSolid, 
+    faHouse as faHomeSolid, 
     faSearch as faExploreRegular, 
-    // faMagnifyingGlassPlus as faExploreSolid, 
-    // faBell as faNotifSolid,
-    // faBookmark as faSavedSolid,
-    // faAddressBook as faUsersSolid,
-    // faCircleUser as faProfileSolid,
+    faMagnifyingGlassPlus as faExploreSolid, 
+    faBell as faNotifSolid,
+    faBookmark as faSavedSolid,
+    faAddressBook as faUsersSolid,
+    faCircleUser as faProfileSolid,
     faToggleOff as faSettingsRegular,
-    // faToggleOn as faSettingsSolid,
+    faToggleOn as faSettingsSolid,
 } from "@fortawesome/free-solid-svg-icons";
 
-function LeftPanel({ centerPanelView }) {
+function LeftPanel({ centerPanelView, setCenterPanelView }) {
+    const isActive = (type) => centerPanelView?.type === type;
+
+    const tabs = [
+        { type: "home", label: "Home", icon: faHomeRegular, activeIcon: faHomeSolid },
+        { type: "explore", label: "Explore", icon: faExploreRegular, activeIcon: faExploreSolid },
+        { type: "notifications", label: "Notifications", icon: faNotifRegular, activeIcon: faNotifSolid },
+        { type: "allUsers", label: "Users", icon: faUsersRegular, activeIcon: faUsersSolid },
+        { type: "saved", label: "Saved", icon: faSavedRegular, activeIcon: faSavedSolid },
+        { type: "ownProfile", label: "Profile", icon: faProfileRegular, activeIcon: faProfileSolid },
+        { type: "settings", label: "Settings", icon: faSettingsRegular, activeIcon: faSettingsSolid },
+    ];
+
     const activeUser = 
     // TODO: 
     // check for active user and render their icon
@@ -35,46 +47,32 @@ function LeftPanel({ centerPanelView }) {
         </div>
 
     const panelTabs = 
-    // TODO: 
-    // when window is narrow
-    // only show icons, no text
-    // "twitter style breakpoint behaviour"
-    // TODO: 
-    // conditionally show solid icons
-    // when they're clicked/their tab is active
         <div className="tabs-container">
-            <div className="home-tab">
-                <FontAwesomeIcon icon={faHomeRegular} className="home-icon nav-icon" /> Home
-            </div>
-
-            <div className="explore-tab">
-                <FontAwesomeIcon icon={faExploreRegular} className="explore-icon nav-icon" /> Explore
-            </div>
-
-            <div className="notif-tab">
-                <FontAwesomeIcon icon={faNotifRegular} className="notif-icon nav-icon" /> Notifications
-            </div>
-
-            <div className="users-tab">
-                <FontAwesomeIcon icon={faUsersRegular} className="users-icon nav-icon" /> Users
-            </div>
-
-            <div className="saved-tab">
-                <FontAwesomeIcon icon={faSavedRegular} className="saved-icon nav-icon" /> Saved
-            </div>
-
-            <div className="profile-tab">
-                <FontAwesomeIcon icon={faProfileRegular} className="profile-icon nav-icon" /> Profile
-            </div>
-
-            <div className="settings-tab">
-                <FontAwesomeIcon icon={faSettingsRegular} className="settings-icon nav-icon" /> Settings
-            </div>
+            {tabs.map(tab => (
+                <div
+                    key={tab.type}
+                    className={`tab ${isActive(tab.type) ? "active" : ""}`}
+                    onClick={() => setCenterPanelView({ type: tab.type })}
+                >
+                    <FontAwesomeIcon 
+                        icon={
+                            isActive(tab.type) && tab.activeIcon
+                                ? tab.activeIcon
+                                : tab.icon
+                        } 
+                        className="nav-icon"
+                    />
+                    {tab.label}
+                </div>
+            ))}
         </div>
 
     const newPost = 
         <div className="new-post button">
-            <FontAwesomeIcon icon={faNewPost} className="new-post-icon" /> New Post
+            <FontAwesomeIcon 
+                icon={faNewPost} 
+                className="new-post-icon" 
+            /> New Post
         </div>
 
     return (
@@ -87,13 +85,5 @@ function LeftPanel({ centerPanelView }) {
         </div>
     )
 }
-
-// <FontAwesomeIcon icon={faHomeSolid} className="home-icon nav-icon" /> 
-// <FontAwesomeIcon icon={faExploreSolid} className="explore-icon nav-icon" /> 
-// <FontAwesomeIcon icon={faNotifSolid} className="notif-icon nav-icon" /> 
-// <FontAwesomeIcon icon={faUsersSolid} className="users-icon nav-icon" />
-// <FontAwesomeIcon icon={faSavedSolid} className="saved-icon nav-icon" />
-// <FontAwesomeIcon icon={faProfileSolid} className="profile-icon nav-icon" />
-// <FontAwesomeIcon icon={faSettingsSolid} className="settings-icon nav-icon" />
 
 export default LeftPanel;
