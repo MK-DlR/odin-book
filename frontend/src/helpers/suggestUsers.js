@@ -3,6 +3,7 @@
 // imports
 import apiFetch from "./apiFetch";
 
+// fetch random users to suggestion
 async function suggestUsers() {
   try {
     const [getAllUsers, getActiveUser] = await Promise.all([
