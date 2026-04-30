@@ -6,7 +6,13 @@
 function UserProfile({ username, isOwnProfile }) {
     return (
         <div className="user-profile">
-            Viewing profile: {username}
+            <h2>{username}</h2>
+
+            {isOwnProfile ? (
+                <button>Edit Profile</button>
+            ) : (
+                <button>Follow</button>
+            )}
         </div>
     );
 }
