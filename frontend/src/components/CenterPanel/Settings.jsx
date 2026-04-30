@@ -3,7 +3,7 @@
 // imports
 
 // TODO: display setting options
-function settingsSelection() {
+function SettingsSelection() {
     const settings = 
         <div className="settings tab">
             TODO: settings tab
@@ -18,4 +18,4 @@ function settingsSelection() {
     )
 }
 
-export default settingsSelection;
+export default SettingsSelection;

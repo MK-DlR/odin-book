@@ -22,7 +22,7 @@ import {
     // faToggleOn as faSettingsSolid,
 } from "@fortawesome/free-solid-svg-icons";
 
-function LeftPanel(centerPanelView) {
+function LeftPanel({ centerPanelView }) {
     const activeUser = 
     // TODO: 
     // check for active user and render their icon

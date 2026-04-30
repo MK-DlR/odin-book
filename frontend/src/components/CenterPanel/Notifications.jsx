@@ -3,7 +3,7 @@
 // imports
 
 // TODO: display notification activity
-function notifView() {
+function NotifView() {
     const notifications = 
         <div className="notifs tab">
             TODO: notifs tab
@@ -18,4 +18,4 @@ function notifView() {
     )
 }
 
-export default notifView;
+export default NotifView;

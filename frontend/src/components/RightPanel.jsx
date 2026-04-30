@@ -4,12 +4,13 @@
 import { useEffect, useState } from "react";
 import followUser from "../helpers/followUser";
 import getIconUrl from "../helpers/getIconUrl";
+import profilePreview from "../helpers/profilePreview";
 import suggestUsers from "../helpers/suggestUsers";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
-function RightPanel(setCenterPanelView) {
+function RightPanel({ setCenterPanelView }) {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
 
     // get randomized suggested users
@@ -41,13 +42,22 @@ function RightPanel(setCenterPanelView) {
         <div 
             key={user.id}
             className="suggested-user"
+            onMouseEnter={() => profilePreview(user)}
         >
             <div className="icon-username">
                 <img 
                     className="sm-icon" 
                     src={getIconUrl(user.icon)} 
                 /> 
-                <a href="PROFILE_LINK" className="bold-link suggested-links">{user.username}</a> 
+                <span 
+                    className="bold-link suggested-links"
+                    onClick={() => setCenterPanelView({
+                        type: "userProfile",
+                        username: user.username
+                    })}
+                >
+                    {user.username}
+                </span>
             </div>
             <FontAwesomeIcon 
                 icon={faUserPlus} 

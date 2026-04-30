@@ -3,7 +3,7 @@
 // imports
 
 // TODO: display liked content
-function savedItems() {
+function SavedItems() {
     const saved = 
         <div className="saved tab">
             TODO: saved tab
@@ -18,4 +18,4 @@ function savedItems() {
     )
 }
 
-export default savedItems;
+export default SavedItems;

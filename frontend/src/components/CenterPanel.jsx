@@ -19,7 +19,7 @@ function CenterPanel({
     let title;
     let content;
     
-    switch (centerPanelView) {
+    switch (centerPanelView?.type || centerPanelView) {
         // LeftPanel tabs
         case "home": // display user's feed
             content = <UserFeed />
@@ -60,7 +60,9 @@ function CenterPanel({
             break;
         // other
         case "userProfile": // display selected user's profile details
-            content = <UserProfile />
+            content = (
+                <UserProfile username={centerPanelView.username} />
+            );
             break;
         default:
             content = <UserFeed />

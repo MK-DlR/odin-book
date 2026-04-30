@@ -3,19 +3,12 @@
 // imports
 
 // TODO: display selected user's profile
-function userProfile() {
-    const fullProfile = 
-        <div className="user-profile">
-            TODO: user profile
-        </div>
-
+function UserProfile({ username }) {
     return (
-        <div className="center-panel">
-            <div className="center-content">
-                {fullProfile}
-            </div>
+        <div className="user-profile">
+            Viewing profile: {username}
         </div>
-    )
+    );
 }
 
-export default userProfile;
+export default UserProfile;

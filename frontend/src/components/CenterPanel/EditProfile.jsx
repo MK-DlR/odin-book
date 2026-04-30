@@ -3,7 +3,7 @@
 // imports
 
 // TODO: modal to allow user to edit profile
-function editProfile() {
+function EditProfile() {
     // main panel view 
     // should remain the user's profile
 
@@ -21,4 +21,4 @@ function editProfile() {
     )
 }
 
-export default editProfile;
+export default EditProfile;

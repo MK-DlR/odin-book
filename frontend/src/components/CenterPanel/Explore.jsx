@@ -3,7 +3,7 @@
 // imports
 
 // TODO: displays all posts from all users
-function exploreView() {
+function ExploreView() {
     const explore = 
         <div className="explore tab">
             TODO: explore tab
@@ -18,4 +18,4 @@ function exploreView() {
     )
 }
 
-export default exploreView;
+export default ExploreView;
