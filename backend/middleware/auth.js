@@ -28,4 +28,32 @@ const authJWT = (req, res, next) => {
   }
 };
 
-module.exports = { authJWT };
+const authEither = (req, res, next) => {
+  // try JWT first
+  const bearerHeader = req.headers["authorization"];
+
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+
+    jwt.verify(bearerToken, process.env.JWT_SECRET, (err, authData) => {
+      if (!err) {
+        // JWT is valid
+        req.user = authData;
+        return next();
+      }
+      // JWT failed, try session below
+    });
+  }
+
+  // no JWT or JWT failed - check session
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    // session is valid (passport sets req.user automatically)
+    return next();
+  }
+
+  // neither worked
+  res.status(401).json({ error: "Not authenticated." });
+};
+
+module.exports = { authJWT, authEither };

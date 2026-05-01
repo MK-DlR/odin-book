@@ -5,6 +5,7 @@ async function apiFetch(url, options = {}) {
   const token = localStorage.getItem("token");
   return fetch(url, {
     ...options,
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
