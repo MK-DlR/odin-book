@@ -17,7 +17,7 @@ const authJWT = (req, res, next) => {
     // verify token
     jwt.verify(bearerToken, process.env.JWT_SECRET, (err, authData) => {
       if (err) {
-        res.status(401).json({ error: "Invalid or expired token." });
+        return res.status(401).json({ error: "Invalid or expired token." });
       } else {
         req.user = authData;
         next();
@@ -29,31 +29,32 @@ const authJWT = (req, res, next) => {
 };
 
 const authEither = (req, res, next) => {
-  // try JWT first
   const bearerHeader = req.headers["authorization"];
 
   if (typeof bearerHeader !== "undefined") {
     const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[1];
 
-    jwt.verify(bearerToken, process.env.JWT_SECRET, (err, authData) => {
+    return jwt.verify(bearerToken, process.env.JWT_SECRET, (err, authData) => {
       if (!err) {
-        // JWT is valid
         req.user = authData;
         return next();
       }
-      // JWT failed, try session below
+
+      // fallback to session
+      if (req.isAuthenticated && req.isAuthenticated()) {
+        return next();
+      }
+
+      return res.status(401).json({ error: "Not authenticated." });
     });
   }
 
-  // no JWT or JWT failed - check session
   if (req.isAuthenticated && req.isAuthenticated()) {
-    // session is valid (passport sets req.user automatically)
     return next();
   }
 
-  // neither worked
-  res.status(401).json({ error: "Not authenticated." });
+  return res.status(401).json({ error: "Not authenticated." });
 };
 
 module.exports = { authJWT, authEither };

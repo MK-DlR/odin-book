@@ -33,7 +33,7 @@ const getSelf = async (req, res, next) => {
     });
     if (userData) {
       // return user
-      res.status(200).json({ userData });
+      return res.status(200).json({ userData });
     } else {
       // user not found
       return res.status(404).json({ error: "User not found." });
@@ -62,7 +62,7 @@ const getAllUsers = async (req, res, next) => {
       },
       orderBy: { username: "asc" },
     });
-    res.status(200).json({ users: allUsers });
+    return res.status(200).json({ users: allUsers });
   } catch (err) {
     return next(err);
   }
@@ -96,7 +96,7 @@ const getProfile = async (req, res, next) => {
 
     if (result) {
       // return found user
-      res.status(200).json({ result });
+      return res.status(200).json({ result });
     } else {
       // user not found
       return res.status(404).json({ error: "User not found." });
@@ -116,7 +116,7 @@ const editProfile = async (req, res, next) => {
     });
 
     // if guest, deny update
-    if (isGuestUser(currentUser)) {
+    if (!currentUser || isGuestUser(currentUser)) {
       return res.status(403).json({
         error: "Guest accounts cannot be edited.",
       });
@@ -139,7 +139,7 @@ const editProfile = async (req, res, next) => {
     });
 
     // return user
-    res.status(200).json({ user });
+    return res.status(200).json({ user });
   } catch (err) {
     return next(err);
   }
