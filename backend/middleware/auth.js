@@ -31,10 +31,14 @@ const authJWT = (req, res, next) => {
 const authEither = (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
 
+  // check if bearer is not undefined
   if (typeof bearerHeader !== "undefined") {
+    // split at space
     const bearer = bearerHeader.split(" ");
+    // get token from array
     const bearerToken = bearer[1];
 
+    // verify token
     return jwt.verify(bearerToken, process.env.JWT_SECRET, (err, authData) => {
       if (!err) {
         req.user = authData;
