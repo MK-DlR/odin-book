@@ -96,9 +96,9 @@ function UserProfile({ user, username, isOwnProfile }) {
     // render actual profile
     return (
         <div className="user-profile">
-            <img 
+            <div 
                 className="banner" 
-                src={getBannerUrl(user.banner)} 
+                style={{ backgroundImage: `url(${getBannerUrl(user.banner)})` }}
             /> 
 
             <img 
