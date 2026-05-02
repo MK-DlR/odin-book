@@ -6,3 +6,7 @@
     background-position: center center;
     background-repeat: no-repeat;
 }
+
+.user-tabs {
+    border-bottom: 1px solid red;
+}

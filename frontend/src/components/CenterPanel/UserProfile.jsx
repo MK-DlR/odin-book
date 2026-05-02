@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import apiFetch from "../../helpers/apiFetch";
 import followUser from "../../helpers/followUser";
 import getBannerUrl from "../../helpers/getBannerUrl";
+import getIconUrl from "../../helpers/getIconUrl";
 
 // TODO: 
 // display selected user's profile information
@@ -99,13 +100,13 @@ function UserProfile({ user, username, isOwnProfile }) {
                 className="banner" 
                 src={getBannerUrl(user.banner)} 
             /> 
-            <h2>{profileUser.username}</h2>
-            <p>{profileUser.displayName}</p>
-            <p>{profileUser.bio}</p>
-            
-            {/* Now you have access to all the fields! */}
-            {/* profileUser.icon, banner, followers, following, etc. */}
 
+            <img 
+                className="lg-icon" 
+                src={getIconUrl(user.icon)} 
+            /> 
+
+            {/* conditionally render edit profile or follow button */}
             {isOwnProfile ? (
                 <button>Edit Profile</button>
             ) : (
@@ -113,6 +114,23 @@ function UserProfile({ user, username, isOwnProfile }) {
                     Follow
                 </button>
             )}
+
+            <h2>{profileUser.displayName}</h2>
+            <p>@{profileUser.username}</p>
+            <p className="user-stats">
+                TODO: [#] followers [#] following [#] posts
+            </p>
+            <br />
+            <p>{profileUser.bio}</p>
+            <br />
+            <div className="user-tabs">TODO: posts, replies, media, likes tabs</div>
+            <div className="user-posts">
+                TODO: posts display here
+            </div>
+            
+            {/* Now you have access to all the fields! */}
+            {/* profileUser.icon, banner, followers, following, etc. */}
+
         </div>
     );
 }
@@ -132,6 +150,9 @@ export default UserProfile;
     - username
     - [#] followers [#] following [#] posts
         - needs to be calculated
+        - followers + following are links
+            - opens new page that lists them
+            - icon, display name, username, bio (snippet), follow/following button
         - posts = original content (posts + replies) only
     - profile info
     - tabs: 
