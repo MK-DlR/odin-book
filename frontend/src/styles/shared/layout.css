@@ -17,7 +17,7 @@
 
 /* center defines readable max width */
 .center-panel {
-    flex: 0 1 650px; /* can shrink, caps growth */
+    flex: 0 1 600px; /* can shrink, caps growth */
     width: 100%;
     display: flex;
     flex-direction: column;

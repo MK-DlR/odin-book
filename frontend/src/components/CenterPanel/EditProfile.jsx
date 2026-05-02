@@ -4,21 +4,24 @@
 
 // TODO: modal to allow user to edit profile
 function EditProfile() {
-    // main panel view 
-    // should remain the user's profile
-
-    const editProfile = 
-        <div className="user-profile">
-            TODO: edit user profile modal
-        </div>
-
     return (
-        <div className="center-panel">
-            <div className="center-content">
-                {editProfile}
-            </div>
+        <div className="edit-profile">
+            TODO: modal to allow user to edit profile
         </div>
-    )
+    );
 }
 
 export default EditProfile;
+
+/*
+- after edit profile button is pressed:
+    - opens edit profile modal
+        - can edit (unless guest account):
+            - banner
+            - avatar
+            - display name
+            - profile info
+        - cancel returns to previous view
+        - save to save changes
+            - save button inactive unless changes have been made
+*/

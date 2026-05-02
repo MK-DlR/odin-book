@@ -11,6 +11,8 @@ import './styles/shared/buttons.css'
 import './styles/shared/icons.css'
 import './styles/shared/layout.css'
 import './styles/shared/text.css'
+
+import './styles/CenterPanel/profile.css'
 import './styles/LeftPanel/tabs.css'
 import './styles/RightPanel/search.css'
 import './styles/RightPanel/suggested.css'

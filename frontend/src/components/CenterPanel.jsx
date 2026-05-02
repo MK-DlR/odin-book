@@ -51,7 +51,7 @@ function CenterPanel({
         case "ownProfile": // display logged in user's profile details
             content = (
                 <UserProfile 
-                    username={currentUser?.username}
+                    user={currentUser}
                     isOwnProfile={true}
                 />
             );
@@ -66,7 +66,10 @@ function CenterPanel({
         // other
         case "userProfile": // display selected user's profile details
             content = (
-                <UserProfile username={centerPanelView.username} />
+                <UserProfile 
+                    username={centerPanelView.username} 
+                    isOwnProfile={false}
+                />
             );
             break;
         default:
