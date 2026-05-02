@@ -98,12 +98,12 @@ function UserProfile({ user, username, isOwnProfile }) {
         <div className="user-profile">
             <div 
                 className="banner" 
-                style={{ backgroundImage: `url(${getBannerUrl(user.banner)})` }}
+                style={{ backgroundImage: `url(${getBannerUrl(profileUser.banner)})` }}
             /> 
 
             <img 
                 className="lg-icon" 
-                src={getIconUrl(user.icon)} 
+                src={getIconUrl(profileUser.icon)} 
             /> 
 
             {/* conditionally render edit profile or follow button */}
@@ -115,13 +115,15 @@ function UserProfile({ user, username, isOwnProfile }) {
                 </button>
             )}
 
-            <h2>{profileUser.displayName}</h2>
+            <h1>{profileUser.displayName}</h1>
             <p>@{profileUser.username}</p>
             <p className="user-stats">
                 TODO: [#] followers [#] following [#] posts
             </p>
             <br />
             <p>{profileUser.bio}</p>
+            <br />
+            <p className="in-common">TODO: if not own profile, "followed by"</p>
             <br />
             <div className="user-tabs">TODO: posts, replies, media, likes tabs</div>
             <div className="user-posts">
@@ -139,22 +141,29 @@ export default UserProfile;
 
 /*
 - profile should display:
+    - back button
+        - top left over banner image
+        - returns user to previous view
     - banner
-    - avatar
+        - if custom banner: clicking opens it in fullsize
+    - icon
+        - if custom icon: clicking opens it in fullsize
     - edit profile button (if viewing own profile)
         - opens edit profile modal
     - following button (if viewing other user's profile)
         - + Follow (following = true)
         - ✓ Following (following = false)
-    - display name
-    - username
     - [#] followers [#] following [#] posts
         - needs to be calculated
         - followers + following are links
             - opens new page that lists them
             - icon, display name, username, bio (snippet), follow/following button
         - posts = original content (posts + replies) only
-    - profile info
+    - "folowed by..."
+        - if viewing other user's profile
+        - icons "followed by" display names
+            - is a link
+                - displays the users same as followers/following pages
     - tabs: 
         - posts
         - replies
