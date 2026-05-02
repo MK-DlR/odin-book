@@ -115,20 +115,13 @@ function UserProfile({ user, username, isOwnProfile }) {
                 </button>
             )}
 
-            <h1>{profileUser.displayName}</h1>
-            <p>@{profileUser.username}</p>
-            <p className="user-stats">
-                TODO: [#] followers [#] following [#] posts
-            </p>
-            <br />
-            <p>{profileUser.bio}</p>
-            <br />
-            <p className="in-common">TODO: if not own profile, "followed by"</p>
-            <br />
+            <h1 className="user-displayname">{profileUser.displayName}</h1>
+            <p className="user-username">@{profileUser.username}</p>
+            <p className="user-stats">TODO: [#] followers [#] following [#] posts</p>
+            <p className="user-bio">{profileUser.bio}</p>
+            <p className="users-common">TODO: if not own profile, "followed by"</p>
             <div className="user-tabs">TODO: posts, replies, media, likes tabs</div>
-            <div className="user-posts">
-                TODO: posts display here
-            </div>
+            <div className="user-posts">TODO: posts display here</div>
             
             {/* Now you have access to all the fields! */}
             {/* profileUser.icon, banner, followers, following, etc. */}
@@ -148,6 +141,8 @@ export default UserProfile;
         - if custom banner: clicking opens it in fullsize
     - icon
         - if custom icon: clicking opens it in fullsize
+        - positioned 50% of itself over banner
+        - thin "cutout" where icon and banner overlap
     - edit profile button (if viewing own profile)
         - opens edit profile modal
     - following button (if viewing other user's profile)
@@ -159,6 +154,7 @@ export default UserProfile;
             - opens new page that lists them
             - icon, display name, username, bio (snippet), follow/following button
         - posts = original content (posts + replies) only
+        - note: [#] should be white and bolded
     - "folowed by..."
         - if viewing other user's profile
         - icons "followed by" display names

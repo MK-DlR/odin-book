@@ -5,6 +5,14 @@
     flex-direction: column;
 }
 
+.tab {
+    cursor: pointer;
+}
+
+.tab:hover {
+    background-color: var(--medium-blue);
+}
+
 /* TODO: on hover color for tabs */
 
 /* TODO: 

@@ -42,3 +42,10 @@
 .suggested-links:hover {
     text-decoration: underline;
 }
+
+/* user profile text */
+.user-username,
+.user-stats,
+.users-common {
+    color: var(--lightest-blue);
+}

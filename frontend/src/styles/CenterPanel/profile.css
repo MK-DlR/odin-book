@@ -8,6 +8,17 @@
     background-size: cover; 
 }
 
+.user-displayname,
+.user-username, 
+.users-common {
+    padding-bottom: 5px;
+}
+
+.user-stats,
+.user-bio {
+    padding-bottom: 10px;
+}
+
 .user-tabs {
     border-bottom: 1px solid red;
 }
