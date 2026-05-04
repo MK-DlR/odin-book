@@ -9,7 +9,7 @@ import getBannerUrl from "../../helpers/getBannerUrl";
 import getIconUrl from "../../helpers/getIconUrl";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft as faBackArrow } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft as faBackArrow, faPlus as faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // TODO: 
 // display selected user's profile information
@@ -116,11 +116,21 @@ function UserProfile({ user, username, isOwnProfile }) {
                 /> 
 
                 {/* conditionally render edit profile or follow button */}
+                {/* 
+                TODO: if following, show "✓ Following"
+                if not following, show "+ Follow" 
+                */}
                 {isOwnProfile ? (
-                    <button>Edit Profile</button>
+                    <button className="button button-edit">Edit Profile</button>
                 ) : (
-                    <button onClick={() => followUser({ username: profileUser.username })}>
-                        Follow
+                    <button 
+                        className="button button-follow"
+                        onClick={() => followUser({ username: profileUser.username })}
+                    >
+                        <FontAwesomeIcon 
+                            icon={faPlus} 
+                            className="follow-icon"
+                        /> Follow
                     </button>
                 )}
 
@@ -160,14 +170,11 @@ export default UserProfile;
 /*
 - profile should display:
     - back button
-        - top left over banner image
         - returns user to previous view
     - banner
         - if custom banner: clicking opens it in fullsize
     - icon
         - if custom icon: clicking opens it in fullsize
-        - positioned 50% of itself over banner
-        - thin "cutout" where icon and banner overlap
     - edit profile button (if viewing own profile)
         - opens edit profile modal
     - following button (if viewing other user's profile)
@@ -179,7 +186,6 @@ export default UserProfile;
             - opens new page that lists them
             - icon, display name, username, bio (snippet), follow/following button
         - posts = original content (posts + replies) only
-        - note: [#] should be white and bolded
     - "folowed by..."
         - if viewing other user's profile
         - icons "followed by" display names

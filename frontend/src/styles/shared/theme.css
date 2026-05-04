@@ -4,15 +4,16 @@
 :root {
     /* primary colors */
     --accent: #0F73FF;
+    --accent-light: #4F96FF;
     --white: #FFFFFF;
     
     /* blue scale */
     --darkest-blue: #151D28;
     --dark-blue: #122136;
-    --medium-blue: #2C3A4E;
-    --grey-blue: #313A4E;
+    --medium-blue: #222E3F;
+    --grey-blue: #2B3A4E;
     --light-blue: #6F839F;
-    --lightest-blue: #BEC9DD;
+    --lightest-blue: #ABB8C9;
     
     /* debug/development colors (remove when not needed) */
     --debug-left-right: blue;

@@ -1,17 +1,16 @@
 /* frontend/src/styles/shared/buttons.css */
 
+/* back arrow button */
 .back-button {
     position: absolute;
     top: -90px;
     left: 17px;
     z-index: 3;
-
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
     background-color: color-mix(in srgb, var(--darkest-blue) 50%, transparent);
     cursor: pointer;
@@ -22,11 +21,53 @@
 }
 
 .back-button:hover {
-    background-color: var(--darkest-blue);
+    background-color: color-mix(in srgb, var(--darkest-blue) 75%, transparent);
 }
 
 /*
 note for back button hover:
 on user pages, hover is darker
 on settings + saved pages, hover is lighter
+*/
+
+/* follow/edit profile button */
+.button {
+    border-radius: 999px;
+    border: transparent;
+    padding: 8px 12px;
+    font-size: 13.1px;
+    cursor: pointer;
+}
+
+.button-edit {
+    background-color: var(--medium-blue);
+    color: var(--lightest-blue);
+    font-weight: bold;
+}
+
+.button-follow {
+    background-color: var(--accent);
+    color: var(--white);
+    font-weight: bold;
+}
+
+.button-edit:hover {
+    background-color: var(--grey-blue);
+}
+
+.button-follow:hover {
+    background-color: var(--accent-light);
+}
+
+/*
+note:
+if "edit profile" or "following"
+button: --medium-blue
+text: --lightest-blue
+hover: --light-blue
+
+if "follow"
+button: --accent
+text: --white
+hover: --accent-light
 */
