@@ -72,7 +72,7 @@ function RightPanel({ setCenterPanelView }) {
         <div id="suggested-container">
             <h3 id="suggested-header">Suggested Users</h3>
             <hr />
-            <div className="suggested-content">
+            <div className="white-link bold-link">
                 {listOfSuggestedUsers}
             </div>
         </div>

@@ -1,8 +1,17 @@
 /* frontend/src/styles/shared/text.css */
 
+/* 
+ALL colors/decoration/bold/italics/etc
+for text and links should be set in this file! 
+*/
+
 /* shared text and links */
 .bold-link {
     font-weight: bold;
+}
+
+.white-link {
+    color: var(--white)
 }
 
 /* left panel text */
@@ -28,10 +37,6 @@
 .right-links, 
 .right-links a:visited {
     color: var(--lightest-blue);
-}
-
-.suggested-links {
-    color: var(--white);
 }
 
 .right-links a:link, 

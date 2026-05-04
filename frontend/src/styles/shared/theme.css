@@ -2,12 +2,20 @@
 
 /* theme variables */
 :root {
+    /* primary colors */
     --accent: #0F73FF;
     --white: #FFFFFF;
+    
+    /* blue scale */
     --darkest-blue: #151D28;
     --dark-blue: #122136;
     --medium-blue: #222E3F;
+    --grey-blue: #313A4E;
     --light-blue: #6F839F;
     --lightest-blue: #BEC9DD;
-    --grey-blue: #313A4E;
+    
+    /* debug/development colors (remove when not needed) */
+    --debug-left-right: blue;
+    --debug-center: red;
+    --debug-suggested: green;
 }

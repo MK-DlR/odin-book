@@ -121,9 +121,21 @@ function UserProfile({ user, username, isOwnProfile }) {
                 </button>
             )}
 
-            <h1 className="user-displayname">{profileUser.displayName}</h1>
-            <p className="user-username">@{profileUser.username}</p>
-            <p className="user-stats">TODO: [#] followers [#] following [#] posts</p>
+            <div className="username-display">
+                <h1>{profileUser.displayName}</h1>
+                <p className="user-username">@{profileUser.username}</p>
+            </div>
+            <div className="user-stats">
+                TODO: 
+                <div className="indiv-stats">
+                    <span className="white-link bold-link">[#]</span>
+                    <span>followers</span>
+                    <span className="white-link bold-link">[#]</span>
+                    <span>following</span>
+                    <span className="white-link bold-link">[#]</span>
+                    <span>posts</span>
+                </div>
+            </div>
             <p className="user-bio">{profileUser.bio}</p>
             <p className="users-common">TODO: if not own profile, "followed by"</p>
             <div className="user-tabs">TODO: tabs - posts, replies, media, likes</div>

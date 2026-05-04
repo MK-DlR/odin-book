@@ -8,8 +8,11 @@
     background-size: cover; 
 }
 
-.user-displayname,
-.user-username, 
+.username-display {
+    padding-top: 2px;
+    padding-bottom: 8px;
+}
+
 .users-common {
     padding-bottom: 5px;
 }
@@ -19,6 +22,15 @@
     padding-bottom: 10px;
 }
 
+.indiv-stats {
+    display: flex;
+    gap: 4px; 
+}
+
+.user-stats {
+    display: flex;
+}
+
 .user-tabs {
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid var(--debug-center);
 }
