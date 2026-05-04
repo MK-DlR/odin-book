@@ -19,7 +19,8 @@
 .right-links a:visited,
 .user-username,
 .users-common,
-.stat-text {
+.stat,
+.post-stat {
     color: var(--lightest-blue);
 }
 
