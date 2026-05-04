@@ -66,6 +66,7 @@
     justify-content: space-between;
     cursor: pointer;
     font-size: 15px;
+    padding: 2px;
 }
 
 .icon-username {
