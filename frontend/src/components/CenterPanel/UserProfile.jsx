@@ -128,12 +128,20 @@ function UserProfile({ user, username, isOwnProfile }) {
             <div className="user-stats">
                 TODO: 
                 <div className="indiv-stats">
-                    <span className="white-link bold-link">[#]</span>
-                    <span>followers</span>
-                    <span className="white-link bold-link">[#]</span>
-                    <span>following</span>
-                    <span className="white-link bold-link">[#]</span>
-                    <span>posts</span>
+                    <a href="TO_DO_LINK" className="stat">
+                        <span className="white-link bold-link">[#]</span>{" "}
+                        <span className="stat-text">followers</span>
+                    </a>
+                    
+                    <a href="TO_DO_LINK" className="stat">
+                        <span className="white-link bold-link">[#]</span>{" "}
+                        <span className="stat-text">following</span>
+                    </a>
+
+                    <div id="stat-posts">
+                        <span className="white-link bold-link">[#]</span>
+                        <span className="stat-text">posts</span>
+                    </div>
                 </div>
             </div>
             <p className="user-bio">{profileUser.bio}</p>

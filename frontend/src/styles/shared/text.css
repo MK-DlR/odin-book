@@ -1,10 +1,5 @@
 /* frontend/src/styles/shared/text.css */
 
-/* 
-ALL colors/decoration/bold/italics/etc
-for text and links should be set in this file! 
-*/
-
 /* shared text and links */
 .left-panel,
 .center-panel,
@@ -20,30 +15,28 @@ for text and links should be set in this file!
     color: var(--white)
 }
 
-/* right panel text and links */
-.right-links {
-    margin-top: 20px;
-    font-size: 13.1px;
-}
-
 .right-links, 
-.right-links a:visited {
+.right-links a:visited,
+.user-username,
+.users-common,
+.stat-text {
     color: var(--lightest-blue);
 }
 
 .right-links a:link, 
-.suggested-links {
+.suggested-links,
+.stat {
     text-decoration: none;
 }
 
 .right-links a:hover, 
-.suggested-links:hover {
+.suggested-links:hover,
+.stat:hover {
     text-decoration: underline;
 }
 
-/* user profile text */
-.user-username,
-.user-stats,
-.users-common {
-    color: var(--lightest-blue);
+/* github and linked in links */
+.right-links {
+    margin-top: 20px;
+    font-size: 13.1px;
 }
