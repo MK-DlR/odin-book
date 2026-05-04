@@ -105,50 +105,52 @@ function UserProfile({ user, username, isOwnProfile }) {
                 style={{ backgroundImage: `url(${getBannerUrl(profileUser.banner)})` }}
             /> 
 
-            <div><FontAwesomeIcon icon={faBackArrow} className="back-icon" /></div>
-
-            <img 
-                className="lg-icon" 
-                src={getIconUrl(profileUser.icon)} 
-            /> 
-
-            {/* conditionally render edit profile or follow button */}
-            {isOwnProfile ? (
-                <button>Edit Profile</button>
-            ) : (
-                <button onClick={() => followUser({ username: profileUser.username })}>
-                    Follow
-                </button>
-            )}
-
-            <div className="username-display">
-                <h1>{profileUser.displayName}</h1>
-                <p className="user-username">@{profileUser.username}</p>
-            </div>
-            <div className="user-stats">
-                TODO: 
-                <div className="indiv-stats">
-                    <a href="TO_DO_LINK" className="stat">
-                        <span className="white-link bold-link">[#]</span> followers
-                    </a>
-                    
-                    <a href="TO_DO_LINK" className="stat">
-                        <span className="white-link bold-link">[#]</span> following
-                    </a>
-
-                    <span className="post-stat">
-                        <span className="white-link bold-link">[#]</span> posts
-                    </span>
+            <div className="without-banner">
+                <div className="back-button">
+                    <FontAwesomeIcon icon={faBackArrow} className="back-icon" />
                 </div>
-            </div>
-            <p className="user-bio">{profileUser.bio}</p>
-            <p className="users-common">TODO: if not own profile, "followed by"</p>
-            <div className="user-tabs">TODO: tabs - posts, replies, media, likes</div>
-            <div className="user-posts">TODO: posts display here</div>
-            
-            {/* Now you have access to all the fields! */}
-            {/* profileUser.icon, banner, followers, following, etc. */}
 
+                <img 
+                    className="profile-icon lg-icon" 
+                    src={getIconUrl(profileUser.icon)} 
+                /> 
+
+                {/* conditionally render edit profile or follow button */}
+                {isOwnProfile ? (
+                    <button>Edit Profile</button>
+                ) : (
+                    <button onClick={() => followUser({ username: profileUser.username })}>
+                        Follow
+                    </button>
+                )}
+
+                <div className="without-header">
+                    <div className="username-display">
+                        <h1>{profileUser.displayName}</h1>
+                        <p className="user-username">@{profileUser.username}</p>
+                    </div>
+                    <div className="user-stats">
+                        TODO: 
+                        <div className="indiv-stats">
+                            <a href="TO_DO_LINK" className="stat">
+                                <span className="white-link bold-link">[#]</span> followers
+                            </a>
+                            
+                            <a href="TO_DO_LINK" className="stat">
+                                <span className="white-link bold-link">[#]</span> following
+                            </a>
+
+                            <span className="post-stat">
+                                <span className="white-link bold-link">[#]</span> posts
+                            </span>
+                        </div>
+                    </div>
+                    <p className="user-bio">{profileUser.bio}</p>
+                    <p className="users-common">TODO: if not own profile, "followed by"</p>
+                </div>
+                <div className="user-tabs">TODO: tabs - posts, replies, media, likes</div>
+                <div className="user-posts">TODO: posts display here</div>
+            </div>
         </div>
     );
 }

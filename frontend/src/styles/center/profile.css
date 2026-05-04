@@ -1,5 +1,6 @@
 /* frontend/src/styles/center/profile.css */
 
+/* header */
 .banner {
     width: 600px;
     height: 150px;
@@ -8,15 +9,25 @@
     background-size: cover; 
 }
 
+.without-banner {
+    position: relative;
+    top: -50px;
+}
+
+.profile-icon {
+    left: -10px;
+}
+
+.without-header {
+    padding-left: 20px;
+}
+
 .username-display {
     padding-top: 2px;
     padding-bottom: 8px;
 }
 
-.users-common {
-    padding-bottom: 5px;
-}
-
+/* bio and stats */
 .user-stats,
 .user-bio {
     padding-bottom: 10px;
@@ -40,6 +51,12 @@
     text-decoration: underline;
 }
 
+.users-common {
+    padding-bottom: 5px;
+}
+
+/* tabs */
 .user-tabs {
+    padding-left: 40px;
     border-bottom: 1px solid var(--debug-center);
 }

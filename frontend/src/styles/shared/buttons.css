@@ -1,1 +1,22 @@
 /* frontend/src/styles/shared/buttons.css */
+
+.back-button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: red; /* or whatever */
+    cursor: pointer;
+}
+
+.back-icon {
+    font-size: 16px;
+}
+
+/*
+note for back button hover:
+on user pages, hover is darker
+on settings + saved pages, hover is lighter
+*/
