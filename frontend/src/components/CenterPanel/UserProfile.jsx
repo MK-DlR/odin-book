@@ -2,10 +2,14 @@
 
 // imports
 import { useEffect, useState } from "react";
+
 import apiFetch from "../../helpers/apiFetch";
 import followUser from "../../helpers/followUser";
 import getBannerUrl from "../../helpers/getBannerUrl";
 import getIconUrl from "../../helpers/getIconUrl";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft as faBackArrow } from "@fortawesome/free-solid-svg-icons";
 
 // TODO: 
 // display selected user's profile information
@@ -101,6 +105,8 @@ function UserProfile({ user, username, isOwnProfile }) {
                 style={{ backgroundImage: `url(${getBannerUrl(profileUser.banner)})` }}
             /> 
 
+            <div><FontAwesomeIcon icon={faBackArrow} className="back-icon" /></div>
+
             <img 
                 className="lg-icon" 
                 src={getIconUrl(profileUser.icon)} 
@@ -120,7 +126,7 @@ function UserProfile({ user, username, isOwnProfile }) {
             <p className="user-stats">TODO: [#] followers [#] following [#] posts</p>
             <p className="user-bio">{profileUser.bio}</p>
             <p className="users-common">TODO: if not own profile, "followed by"</p>
-            <div className="user-tabs">TODO: posts, replies, media, likes tabs</div>
+            <div className="user-tabs">TODO: tabs - posts, replies, media, likes</div>
             <div className="user-posts">TODO: posts display here</div>
             
             {/* Now you have access to all the fields! */}

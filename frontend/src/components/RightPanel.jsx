@@ -2,6 +2,7 @@
 
 // imports
 import { useEffect, useState } from "react";
+
 import followUser from "../helpers/followUser";
 import getIconUrl from "../helpers/getIconUrl";
 import profilePreview from "../helpers/profilePreview";

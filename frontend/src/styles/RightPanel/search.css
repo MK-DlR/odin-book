@@ -14,6 +14,7 @@
     background-color: var(--medium-blue);
     color: var(--light-blue);
     height: 45px;
+    font-size: 15px;
 }
 
 .search-icon {
