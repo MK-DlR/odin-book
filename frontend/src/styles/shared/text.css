@@ -6,6 +6,12 @@ for text and links should be set in this file!
 */
 
 /* shared text and links */
+.left-panel,
+.center-panel,
+.right-panel {
+    color: var(--white);
+}
+
 .bold-link {
     font-weight: bold;
 }
@@ -14,21 +20,7 @@ for text and links should be set in this file!
     color: var(--white)
 }
 
-/* left panel text */
-.left-panel {
-    color: var(--white);
-}
-
-/* center panel text */
-.center-panel {
-    color: var(--white);
-}
-
 /* right panel text and links */
-.right-panel {
-    color: var(--white);
-}
-
 .right-links {
     margin-top: 20px;
     font-size: 13.1px;
