@@ -1,18 +1,28 @@
 /* frontend/src/styles/shared/buttons.css */
 
 .back-button {
+    position: absolute;
+    top: -90px;
+    left: 17px;
+    z-index: 3;
+
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
+
     border-radius: 50%;
-    background-color: red; /* or whatever */
+    background-color: color-mix(in srgb, var(--darkest-blue) 50%, transparent);
     cursor: pointer;
 }
 
 .back-icon {
-    font-size: 16px;
+    font-size: 18px;
+}
+
+.back-button:hover {
+    background-color: var(--darkest-blue);
 }
 
 /*
