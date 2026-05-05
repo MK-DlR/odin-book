@@ -85,6 +85,10 @@ function UserProfile({ user, username, isOwnProfile }) {
 
     const bannerUrl = getBannerUrl(profileUser.banner);
 
+    // TODO:
+    // switch statement (like CenterPanel)
+    // to handle what posts-display shows
+
     // render actual profile
     return (
         <div className="user-profile">
@@ -97,8 +101,6 @@ function UserProfile({ user, username, isOwnProfile }) {
                 TODO:
                 if custom uploaded banner
                 clicking on it opens it to fullsize
-                change default banner to use background-color
-                instead of static image
             */}
 
             <div className="without-banner">

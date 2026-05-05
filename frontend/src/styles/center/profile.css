@@ -72,11 +72,13 @@
 
 /* tabs */
 .user-tabs {
-    padding: 14px 14px 13px 14px;
+    display: flex;
     border-bottom: 1px solid var(--debug-center);
 }
 
 .profile-tab {
+    flex: 1;
+    text-align: center;
     text-decoration: none;
     padding: 13px;
 }
