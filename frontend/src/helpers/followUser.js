@@ -17,6 +17,8 @@ async function followUser(user) {
   // LOGGING
   console.log(`followed/unfollowed ${user.username}`);
   console.log(data);
+
+  return data;
 }
 
 export default followUser;

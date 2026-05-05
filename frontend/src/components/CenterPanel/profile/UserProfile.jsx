@@ -8,11 +8,23 @@ import useFollowStatus from "../../../helpers/useFollowStatus";
 import useUserProfile from "../../../helpers/useUserProfile";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft as faBackArrow, faPlus as faPlus } from "@fortawesome/free-solid-svg-icons";
+import { 
+    faArrowLeft as faBackArrow, 
+    faCheck as faCheck, 
+    faPlus as faPlus 
+} from "@fortawesome/free-solid-svg-icons";
 
 // display selected user's profile information
 function UserProfile({ user, username, isOwnProfile }) {
     const { profileUser, loading, error } = useUserProfile(user, username);
+    const { 
+        isFollowing, 
+        toggleFollow, 
+        loading: followLoading 
+    } = useFollowStatus(
+        profileUser?.isFollowedByViewer || false, 
+        profileUser?.username
+    );
 
     // handle loading state
     if (loading) {
@@ -80,12 +92,13 @@ function UserProfile({ user, username, isOwnProfile }) {
                 ) : (
                     <button 
                         className="button button-follow"
-                        onClick={() => followUser({ username: profileUser.username })}
+                        onClick={toggleFollow}
+                        disabled={followLoading}
                     >
                         <FontAwesomeIcon 
-                            icon={faPlus} 
+                            icon={isFollowing ? faCheck : faPlus}
                             className="follow-icon"
-                        /> Follow
+                        /> {isFollowing ? "Following" : "Follow"}
                     </button>
                 )}
 
