@@ -59,6 +59,7 @@
 .stat:hover {
     color: var(--lightest-blue);
     text-decoration: underline;
+    text-decoration-color: var(--white);
 }
 
 .users-common {
@@ -67,6 +68,15 @@
 
 /* tabs */
 .user-tabs {
-    padding-left: 40px;
+    padding: 14px 14px 13px 14px;
     border-bottom: 1px solid var(--debug-center);
+}
+
+.profile-tab {
+    text-decoration: none;
+    padding: 13px;
+}
+
+.profile-tab:hover {
+    background-color: var(--hover-blue);
 }

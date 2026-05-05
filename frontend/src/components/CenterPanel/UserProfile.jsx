@@ -11,21 +11,7 @@ import getIconUrl from "../../helpers/getIconUrl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft as faBackArrow, faPlus as faPlus } from "@fortawesome/free-solid-svg-icons";
 
-// TODO: 
 // display selected user's profile information
-
-// TODO: 
-// add edit button functionality
-
-// TODO:
-// if custom uploaded banner
-// clicking on it opens it to fullsize
-
-// TODO: 
-// add follow button styling
-// conditionally render 
-// "+ Follow" (blue/white - if not following)
-// "✓ Following" (grey/grey - if already following)
 function UserProfile({ user, username, isOwnProfile }) {
     const [profileUser, setProfileUser] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -105,6 +91,14 @@ function UserProfile({ user, username, isOwnProfile }) {
                 style={{ backgroundImage: `url(${getBannerUrl(profileUser.banner)})` }}
             /> 
 
+            {/*
+                TODO:
+                if custom uploaded banner
+                clicking on it opens it to fullsize
+                change default banner to use background-color
+                instead of static image
+            */}
+
             <div className="without-banner">
                 <div className="back-button">
                     <FontAwesomeIcon icon={faBackArrow} className="back-icon" />
@@ -115,10 +109,21 @@ function UserProfile({ user, username, isOwnProfile }) {
                     src={getIconUrl(profileUser.icon)} 
                 /> 
 
+                {/*
+                    TODO:
+                    if custom uploaded icon
+                    clicking on it opens it to fullsize
+                */}
+
                 {/* conditionally render edit profile or follow button */}
                 {/* 
-                TODO: if following, show "✓ Following"
-                if not following, show "+ Follow" 
+                TODO: 
+                    if following, show "✓ Following"
+                    if not following, show "+ Follow" 
+                */}
+                {/* 
+                TODO:
+                    add edit button functionality
                 */}
                 {isOwnProfile ? (
                     <button className="button button-edit">Edit Profile</button>
@@ -140,7 +145,10 @@ function UserProfile({ user, username, isOwnProfile }) {
                         <p className="user-username">@{profileUser.username}</p>
                     </div>
                     <div className="user-stats">
-                        TODO: 
+                        {/*
+                            TODO:
+                                calculate and display [#] amounts
+                        */}
                         <div className="indiv-stats">
                             <a href="TO_DO_LINK" className="stat">
                                 <span className="white-link bold-link">[#]</span> followers
@@ -156,10 +164,38 @@ function UserProfile({ user, username, isOwnProfile }) {
                         </div>
                     </div>
                     <p className="user-bio">{profileUser.bio}</p>
-                    <p className="users-common">TODO: if not own profile, "followed by"</p>
+                    {/*
+                        TODO:
+                        if not own profile
+                        display "followed by"
+                        that logged in user is also following
+                    */}
+                    <p className="users-common">"followed by"</p>
                 </div>
-                <div className="user-tabs">TODO: tabs - posts, replies, media, likes</div>
-                <div className="user-posts">TODO: posts display here</div>
+                {/* 
+                TODO: 
+                    tab "links" that change the user-posts view 
+                */}
+                <div className="user-tabs">
+                    <a href="TO_DO_LINK" className="profile-tab bold-link lightblue-link">
+                        Posts
+                    </a>
+                    <a href="TO_DO_LINK" className="profile-tab bold-link lightblue-link">
+                        Replies
+                    </a>
+                    <a href="TO_DO_LINK" className="profile-tab bold-link lightblue-link">
+                        Media
+                    </a>
+                    <a href="TO_DO_LINK" className="profile-tab bold-link lightblue-link">
+                        Likes
+                    </a>
+                </div>
+                {/* 
+                TODO: 
+                    default display posts 
+                    reposts + original content + replies
+                */}
+                <div className="user-posts">posts display</div>
             </div>
         </div>
     );
@@ -192,10 +228,7 @@ export default UserProfile;
             - is a link
                 - displays the users same as followers/following pages
     - tabs: 
-        - posts
-        - replies
-        - media
-        - likes
+        - change posts display to show content
     - all reposted content
         - posts, replies, etc
 */

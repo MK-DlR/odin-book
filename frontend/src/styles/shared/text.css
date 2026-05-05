@@ -15,6 +15,10 @@
     color: var(--white)
 }
 
+.lightblue-link {
+    color: var(--lightest-blue);
+}
+
 .right-links, 
 .right-links a:visited,
 .user-username,
