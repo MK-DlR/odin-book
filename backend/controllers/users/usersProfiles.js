@@ -95,8 +95,30 @@ const getProfile = async (req, res, next) => {
     });
 
     if (result) {
+      // check following status
+      let isFollowedByViewer = false;
+
+      if (req.user && req.user.id !== result.id) {
+        // check if follow relationship exists
+        const followRelationship = await prisma.follow.findUnique({
+          where: {
+            followerId_followingId: {
+              followerId: req.user.id,
+              followingId: result.id,
+            },
+          },
+        });
+
+        isFollowedByViewer = !!followRelationship;
+      }
+
       // return found user
-      return res.status(200).json({ result });
+      return res.status(200).json({
+        result: {
+          ...result,
+          isFollowedByViewer,
+        },
+      });
     } else {
       // user not found
       return res.status(404).json({ error: "User not found." });

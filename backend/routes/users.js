@@ -18,7 +18,7 @@ router.post("/guest-login", usersAuthController.loginGuest);
 // profile routes
 router.get("/me", authEither, usersProfilesController.getSelf);
 router.get("/all-users", usersProfilesController.getAllUsers);
-router.get("/:username", usersProfilesController.getProfile);
+router.get("/:username", authEither, usersProfilesController.getProfile);
 router.put("/:username", authEither, usersProfilesController.editProfile);
 
 // follow routes
