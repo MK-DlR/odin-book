@@ -1,7 +1,8 @@
 // frontend/src/components/CenterPanel/profile/UserProfile.jsx
 
 // imports
-import followUser from "../../../helpers/followUser";
+import ProfileHeader from "./ProfileHeader";
+
 import getBannerUrl from "../../../helpers/getBannerUrl";
 import getIconUrl from "../../../helpers/getIconUrl";
 import useFollowStatus from "../../../helpers/useFollowStatus";
@@ -41,8 +42,6 @@ function UserProfile({ user, username, isOwnProfile }) {
         return <div className="user-profile">No user data available</div>;
     }
 
-    const bannerUrl = getBannerUrl(profileUser.banner);
-
     // TODO:
     // switch statement (like CenterPanel)
     // to handle what posts-display shows
@@ -50,58 +49,13 @@ function UserProfile({ user, username, isOwnProfile }) {
     // render actual profile
     return (
         <div className="user-profile">
-            <div 
-                className={`banner ${!bannerUrl ? "banner--fallback" : ""}`}
-                style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : {}}
-            /> 
-
-            {/*
-                TODO:
-                if custom uploaded banner
-                clicking on it opens it to fullsize
-            */}
-
-            <div className="without-banner">
-                <div className="back-button">
-                    <FontAwesomeIcon icon={faBackArrow} className="back-icon" />
-                </div>
-
-                <img 
-                    className="profile-icon lg-icon" 
-                    src={getIconUrl(profileUser.icon)} 
-                /> 
-
-                {/*
-                    TODO:
-                    if custom uploaded icon
-                    clicking on it opens it to fullsize
-                */}
-
-                {/* conditionally render edit profile or follow button */}
-                {/* 
-                TODO: 
-                    if following, show "✓ Following"
-                    if not following, show "+ Follow" 
-                */}
-                {/* 
-                TODO:
-                    add edit button functionality
-                */}
-                {isOwnProfile ? (
-                    <button className="button button-edit">Edit Profile</button>
-                ) : (
-                    <button 
-                        className="button button-follow"
-                        onClick={toggleFollow}
-                        disabled={followLoading}
-                    >
-                        <FontAwesomeIcon 
-                            icon={isFollowing ? faCheck : faPlus}
-                            className="follow-icon"
-                        /> {isFollowing ? "Following" : "Follow"}
-                    </button>
-                )}
-
+            <ProfileHeader 
+                profileUser={profileUser}
+                isOwnProfile={isOwnProfile}
+                isFollowing={isFollowing}
+                toggleFollow={toggleFollow}
+                followLoading={followLoading}
+            />
                 <div className="without-header">
                     <div className="username-display">
                         <h1>{profileUser.displayName}</h1>
@@ -160,7 +114,6 @@ function UserProfile({ user, username, isOwnProfile }) {
                 */}
                 <div className="posts-display">posts display</div>
             </div>
-        </div>
     );
 }
 
@@ -176,9 +129,6 @@ export default UserProfile;
         - if custom icon: clicking opens it in fullsize
     - edit profile button (if viewing own profile)
         - opens edit profile modal
-    - following button (if viewing other user's profile)
-        - + Follow (following = true)
-        - ✓ Following (following = false)
     - [#] followers [#] following [#] posts
         - needs to be calculated
         - followers + following are links
