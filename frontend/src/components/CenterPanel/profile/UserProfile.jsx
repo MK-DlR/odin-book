@@ -2,18 +2,8 @@
 
 // imports
 import ProfileHeader from "./ProfileHeader";
-
-import getBannerUrl from "../../../helpers/getBannerUrl";
-import getIconUrl from "../../../helpers/getIconUrl";
 import useFollowStatus from "../../../helpers/useFollowStatus";
 import useUserProfile from "../../../helpers/useUserProfile";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-    faArrowLeft as faBackArrow, 
-    faCheck as faCheck, 
-    faPlus as faPlus 
-} from "@fortawesome/free-solid-svg-icons";
 
 // display selected user's profile information
 function UserProfile({ user, username, isOwnProfile }) {

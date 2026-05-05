@@ -3,7 +3,6 @@
 // imports
 import getBannerUrl from "../../../helpers/getBannerUrl";
 import getIconUrl from "../../../helpers/getIconUrl";
-import useUserProfile from "../../../helpers/useUserProfile";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
