@@ -83,12 +83,14 @@ function UserProfile({ user, username, isOwnProfile }) {
         return <div className="user-profile">No user data available</div>;
     }
 
+    const bannerUrl = getBannerUrl(profileUser.banner);
+
     // render actual profile
     return (
         <div className="user-profile">
             <div 
-                className="banner" 
-                style={{ backgroundImage: `url(${getBannerUrl(profileUser.banner)})` }}
+                className={`banner ${!bannerUrl ? "banner--fallback" : ""}`}
+                style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : {}}
             /> 
 
             {/*

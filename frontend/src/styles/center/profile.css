@@ -9,6 +9,10 @@
     background-size: cover; 
 }
 
+.banner--fallback {
+    background-color: var(--hover-blue);
+}
+
 .without-banner {
     position: relative;
     top: -50px;

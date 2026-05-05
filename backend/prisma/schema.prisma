@@ -17,7 +17,7 @@ model User {
   githubProfile      Json?
   displayName        String?  @db.VarChar(64)
   icon               String   @default("default-icon.png")
-  banner             String   @default("default-banner.png")
+  banner             String?
   bio                String?  @db.VarChar(200)
   authoredPosts      Post[]   @relation("UserPosts")
   reposts            Repost[]
