@@ -1,72 +1,18 @@
 // frontend/src/components/CenterPanel/profile/UserProfile.jsx
 
 // imports
-import { useEffect, useState } from "react";
-
-import apiFetch from "../../../helpers/apiFetch";
 import followUser from "../../../helpers/followUser";
 import getBannerUrl from "../../../helpers/getBannerUrl";
 import getIconUrl from "../../../helpers/getIconUrl";
+import useFollowStatus from "../../../helpers/useFollowStatus";
+import useUserProfile from "../../../helpers/useUserProfile";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft as faBackArrow, faPlus as faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // display selected user's profile information
 function UserProfile({ user, username, isOwnProfile }) {
-    const [profileUser, setProfileUser] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
-    // fetch user data if only username is passed
-    useEffect(() => {
-        // use existing user object if available
-        if (user) {
-            setProfileUser(user);
-            return;
-        }
-
-        // only fetch if there's a username and no user object
-        if (!username) return;
-
-        // track if component is still mounted
-        let isMounted = true;
-
-        async function fetchUserProfile() {
-            setLoading(true);
-            setError(null);
-
-            try {
-                const response = await apiFetch(
-                    `${import.meta.env.VITE_API_URL}/users/${username}`
-                );
-
-                // check response status
-                if (!response.ok) {
-                    throw new Error('User not found');
-                }
-
-                const data = await response.json();
-                
-                if (isMounted) {
-                    setProfileUser(data.result);
-                }
-            } catch (err) {
-                if (isMounted) {
-                    setError(err.message);
-                }
-            } finally {
-                if (isMounted) {
-                    setLoading(false);
-                }
-            }
-        }
-
-        fetchUserProfile();
-
-        return () => {
-            isMounted = false;
-        };
-    }, [user, username]);
+    const { profileUser, loading, error } = useUserProfile(user, username);
 
     // handle loading state
     if (loading) {
