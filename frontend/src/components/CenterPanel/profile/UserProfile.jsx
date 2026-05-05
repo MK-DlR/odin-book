@@ -1,12 +1,12 @@
-// frontend/src/components/CenterPanel/UserProfile.jsx
+// frontend/src/components/CenterPanel/profile/UserProfile.jsx
 
 // imports
 import { useEffect, useState } from "react";
 
-import apiFetch from "../../helpers/apiFetch";
-import followUser from "../../helpers/followUser";
-import getBannerUrl from "../../helpers/getBannerUrl";
-import getIconUrl from "../../helpers/getIconUrl";
+import apiFetch from "../../../helpers/apiFetch";
+import followUser from "../../../helpers/followUser";
+import getBannerUrl from "../../../helpers/getBannerUrl";
+import getIconUrl from "../../../helpers/getIconUrl";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft as faBackArrow, faPlus as faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -199,7 +199,7 @@ function UserProfile({ user, username, isOwnProfile }) {
                     default display posts 
                     reposts + original content + replies
                 */}
-                <div className="user-posts">posts display</div>
+                <div className="posts-display">posts display</div>
             </div>
         </div>
     );

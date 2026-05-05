@@ -7,7 +7,7 @@ import Notifications from "./CenterPanel/Notifications";
 import Saved from "./CenterPanel/Saved";
 import Settings from "./CenterPanel/Settings";
 import UserFeed from "./CenterPanel/UserFeed";
-import UserProfile from "./CenterPanel/UserProfile";
+import UserProfile from "./CenterPanel/profile/UserProfile";
 import Users from "./CenterPanel/Users";
 
 function CenterPanel({
