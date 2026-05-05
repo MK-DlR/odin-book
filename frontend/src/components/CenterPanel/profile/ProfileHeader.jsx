@@ -22,33 +22,28 @@ function ProfileHeader({
 
     return (
         <>
-            <div 
-                className={`banner ${!bannerUrl ? "banner--fallback" : ""}`}
-                style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : {}}
-            /> 
-
             {/*
                 TODO:
                 if custom uploaded banner
                 clicking on it opens it to fullsize
             */}
-
+            <div 
+                className={`banner ${!bannerUrl ? "banner--fallback" : ""}`}
+                style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : {}}
+            /> 
             <div className="without-banner">
                 <div className="back-button">
                     <FontAwesomeIcon icon={faBackArrow} className="back-icon" />
                 </div>
-
-                <img 
-                    className="profile-icon lg-icon" 
-                    src={getIconUrl(profileUser.icon)} 
-                /> 
-
                 {/*
                     TODO:
                     if custom uploaded icon
                     clicking on it opens it to fullsize
                 */}
-
+                <img 
+                    className="profile-icon lg-icon" 
+                    src={getIconUrl(profileUser.icon)} 
+                /> 
                 {/* conditionally render edit profile or follow button */}
                 {/* 
                     TODO:
@@ -74,3 +69,16 @@ function ProfileHeader({
 }
 
 export default ProfileHeader;
+
+/*
+FULL TODO:
+- should display:
+    - back button
+        - returns user to previous view
+    - banner
+        - if custom banner: clicking opens it in fullsize
+    - icon
+        - if custom icon: clicking opens it in fullsize
+    - edit profile button (if viewing own profile)
+        - opens edit profile modal
+*/
