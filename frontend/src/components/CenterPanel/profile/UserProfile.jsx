@@ -37,10 +37,6 @@ function UserProfile({ user, username, isOwnProfile }) {
         return <div className="user-profile">No user data available</div>;
     }
 
-    // TODO:
-    // switch statement (like CenterPanel)
-    // to handle what posts-display shows
-
     // user profile
     return (
         <div className="user-profile">

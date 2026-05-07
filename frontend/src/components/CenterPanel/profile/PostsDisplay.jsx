@@ -1,10 +1,11 @@
 // frontend/src/components/CenterPanel/profile/PostsDisplay.jsx
 
 // props: username, activeTab, posts
-// switch statement will live to handle different tab views
 
 function PostsDisplay() {
-    // code
+    // TODO:
+    // switch statement (like CenterPanel)
+    // to handle what posts-display shows
 
     return (
         <>
@@ -20,4 +21,5 @@ FULL TODO:
 - should display:
     - all reposted content
         - posts, replies, etc
+    - tab contents depending on what is selected
 */
