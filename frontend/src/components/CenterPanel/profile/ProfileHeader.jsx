@@ -3,6 +3,7 @@
 // imports
 import getBannerUrl from "../../../helpers/getBannerUrl";
 import getIconUrl from "../../../helpers/getIconUrl";
+import openFullsize from "../../../helpers/openFullsize";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
@@ -30,8 +31,14 @@ function ProfileHeader({
             <div 
                 className={`banner ${!bannerUrl ? "banner--fallback" : ""}`}
                 style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : {}}
+                onClick={openFullsize}
             /> 
             <div className="without-banner">
+                {/*
+                    TODO:
+                    back button
+                    returns user to previous view
+                */}
                 <div className="back-button">
                     <FontAwesomeIcon icon={faBackArrow} className="back-icon" />
                 </div>
@@ -42,7 +49,8 @@ function ProfileHeader({
                 */}
                 <img 
                     className="profile-icon lg-icon" 
-                    src={getIconUrl(profileUser.icon)} 
+                    src={getIconUrl(profileUser.icon)}
+                    onClick={openFullsize} 
                 /> 
                 {/* conditionally render edit profile or follow button */}
                 {/* 
@@ -78,7 +86,7 @@ FULL TODO:
     - banner
         - if custom banner: clicking opens it in fullsize
     - icon
-        - if custom icon: clicking opens it in fullsize
+        - clicking opens it in fullsize
     - edit profile button (if viewing own profile)
         - opens edit profile modal
 */
