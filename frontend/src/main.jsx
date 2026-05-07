@@ -4,6 +4,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
+import { FullsizeImageProvider } from './contexts/FullsizeImageContent.jsx'
 
 import './styles/shared/base.css'
 import './styles/shared/buttons.css'
@@ -18,6 +19,8 @@ import './styles/individual/tabs.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <FullsizeImageProvider>
+      <App />
+    </FullsizeImageProvider>
   </StrictMode>,
 )
